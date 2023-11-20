@@ -28,7 +28,6 @@ const DetailReport = () => {
   const showResult = async (e) => {
     e.preventDefault();
     const url = "/api/energyconsumption/detail";
-    console.log("url",url)
     const result = await fetch(url, {
       method: "POST",
       body: JSON.stringify({ data }),
