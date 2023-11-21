@@ -9,6 +9,7 @@ export async function GET() {
     });
     return NextResponse.json(users);
   } catch (error) {
-    return NextResponse.json({ error: "error" });
+    // return NextResponse.json({ error: "error" });
+    return NextResponse.json({ error });
   }
 }

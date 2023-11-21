@@ -5,7 +5,6 @@ const GetApi = () => {
     const [data,setData] = useState([])
 
 useEffect(()=>{
-
 console.log("data",data)
 },[data])
 
