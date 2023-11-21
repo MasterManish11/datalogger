@@ -25,20 +25,60 @@ const DetailReport = () => {
     });
   };
 
-  const showResult = async (e) => {
-    e.preventDefault();
-    const url = "/api/energyconsumption/detail";
-    const result = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify({ data }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const response = await result.json();
-    // console.log("response",response)
-    setAnswer(response);
+  // const showResult = async (e) => {
+  //   e.preventDefault();
+  //   const url = "/api/energyconsumption/detail";
+  //   const result = await fetch(url, {
+  //     method: "POST",
+  //     body: JSON.stringify({ data }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const response = await result.json();
+  //   // console.log("response",response)
+  //   setAnswer(response);
+  // };
+
+  const showResult = async (event) => {
+    try {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+  
+      // Define the API endpoint
+      const apiUrl = "/api/energyconsumption/detail";
+  
+      // Prepare the request options
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data }), // Assuming `data` is defined elsewhere
+      };
+  
+      // Make the API request
+      const response = await fetch(apiUrl, requestOptions);
+  
+      // Check if the request was successful (status code 2xx)
+      if (!response.ok) {
+        throw new Error(`Request failed with status: ${response.status}`);
+      }
+  
+      // Parse the JSON response
+      const responseData = await response.json();
+  
+      // Update state with the response data
+      setAnswer(responseData);
+  
+    } catch (error) {
+      // Handle errors, e.g., log them or show an error message to the user
+      console.error("Error in showResult:", error);
+    }
   };
+  
+
+
 
 const saveData =()=>{
 const pdf = new jsPDF()
