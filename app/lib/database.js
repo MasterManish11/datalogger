@@ -38,7 +38,7 @@ export async function query({ query, values = [] }) {
     return results;
   } catch (error) {
     // return {error}
-    console.error("Database error:", error.message);
+    console.log("Database error:", error.message);
     // throw error;
   } finally {
     if (connection) {
