@@ -1,8 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const GetApi = () => {
     const [data,setData] = useState([])
+
+useEffect(()=>{
+
+console.log("data",data)
+},[data])
+
     const callApi = async (event) => {
         try {
           // Prevent the default form submission behavior
@@ -45,11 +51,13 @@ const GetApi = () => {
     <div>
       <h1>api call</h1>
       <button onClick={callApi}>Call api</button>
-       {
+       {/* {
         data && data.map((d,i)=>
+        <>
         <li key={i}>{d.kwhr}</li>
+        </>
         )
-       }     
+       }      */}
 
     </div>
   )
