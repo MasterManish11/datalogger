@@ -27,7 +27,10 @@ const dbConfig = {
 
 const pool = mysql.createPool(dbConfig);
 
+
 export async function query({ query, values = [] }) {
+  
+  
   let connection;
   try {
     connection = await pool.getConnection();
