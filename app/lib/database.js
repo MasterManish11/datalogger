@@ -37,8 +37,8 @@ export async function query({ query, values = [] }) {
     const [results] = await connection.execute(query, values);
     return results;
   } catch (error) {
-    // return {error}
-    console.log("Database error:", error.message);
+    return {error}
+    // console.log("Database error:", error.message);
     // throw error;
   } finally {
     if (connection) {
