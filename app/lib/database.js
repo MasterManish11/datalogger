@@ -23,6 +23,7 @@ const dbConfig = {
   user: process.env.DB_USER || "Admin",
   password: process.env.DB_PASSWORD || "Master1235",
   database: process.env.DB_NAME || "rishabhplastic",
+  waitForConnections: true,
 };
 
 const pool = mysql.createPool(dbConfig);
