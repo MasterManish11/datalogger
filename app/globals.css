@@ -17,9 +17,13 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  /* color: rgb(var(--foreground-rgb)); */
+  /* overflow-y: hidden; */
 }
 
+body{
+  @apply bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 h-screen
+}
 
 .content-container {
   @apply xl:max-w-7xl lg:max-w-5xl px-3 mx-auto;

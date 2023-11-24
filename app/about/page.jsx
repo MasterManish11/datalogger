@@ -4,7 +4,7 @@ import Link from "next/link";
 const AboutUs = () => {
   return (
     <div>
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero h-screen bg-base-200 overflow-y-hidden">
         <div className="hero-content flex-col lg:flex-row">
           <Image
             src="/product.jpg"
