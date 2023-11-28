@@ -5,7 +5,7 @@ import MachineData from "./components/MachineData";
 const Dashboard = () => {
   const[machineData,setMachineData]= useState([])
   const [loading, setLoading] = useState(true);
-  const url = "http://localhost:3000/api/dashboard"||"https://datalogger.vercel.app/api/dashboard"
+  const url = "https://datalogger.vercel.app/api/dashboard"||"http://localhost:3000/api/dashboard"
   useEffect(() => {
     let interval = setInterval(async () => {
       const response = await fetch(url);
