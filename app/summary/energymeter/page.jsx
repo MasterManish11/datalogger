@@ -1,15 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Multiselect from "multiselect-react-dropdown";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
-const ProductionDetailReport = () => {
+const EnergySummaryReport = () => {
+  const state = {
+    options: [
+      { name: "1", id: 1 },
+      { name: "2", id: 2 },
+      //   { name: "3", id: 3 },
+      //   { name: "4", id: 4 },
+      //   { name: "5", id: 5 },
+      //   { name: "6", id: 6 },
+      //   { name: "7", id: 7 },
+      //   { name: "8", id: 8 },
+      //   { name: "9", id: 9 },
+      //   { name: "10", id: 10 },
+    ],
+  };
+  const [isSelected, setIsSelected] = useState([]);
   const [answer, setAnswer] = useState([]);
   const [data, setData] = useState({
-    date: "",
-    energymeter: "",
+    fdate: "",
+    tdate: "",
     shift: "",
   });
 
@@ -25,13 +41,24 @@ const ProductionDetailReport = () => {
     });
   };
 
+  const onSelect = (selectedList) => {
+    setIsSelected(selectedList.map((list) => list.name));
+  };
+  const onRemove = (selectedList) => {
+    setIsSelected(selectedList.map((list) => list.name));
+  };
+
+//   useEffect(() => {
+//     console.log("data", data);
+//   }, [data]);
+
   const showResult = async (event) => {
     try {
       // Prevent the default form submission behavior
       event.preventDefault();
 
       // Define the API endpoint
-      const apiUrl = "/api/production/detail";
+      const apiUrl = "/api/energyconsumption";
 
       // Prepare the request options
       const requestOptions = {
@@ -39,7 +66,7 @@ const ProductionDetailReport = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data }), // Assuming `data` is defined elsewhere
+        body: JSON.stringify({ data,isSelected }), // Assuming `data` is defined elsewhere
       };
 
       // Make the API request
@@ -75,37 +102,61 @@ const ProductionDetailReport = () => {
   return (
     <div className="content-container bg-gradient-to-r from-cyan-400 to-blue-400 py-3 rounded">
       <div className="bg-orange-300 rounded py-1">
-        <h1 className="text-center">Production Detail Report</h1>
+        <h1 className="text-center">EnergyMeter Summary Report</h1>
       </div>
-      <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
+      <div className="grid lg:grid-cols-7 lg:gap-4 py-2 grid-cols-3 gap-4">
         <div>
-          <label htmlFor="date" className="font-semibold"> Select date</label>
+          <label htmlFor="fdate" className="font-semibold">
+            {" "}
+            from date
+          </label>
+
           <input
             type="date"
-            name="date"
-            id="date"
+            name="fdate"
+            id="fdate"
             className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
             onChange={inputEvent}
-            value={data.date}
+            value={data.fdate}
           />
         </div>
         <div>
-          <label htmlFor="energymeter" className="font-semibold"> Select Machine</label>
-          <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="energymeter"
-            id="energymeter"
+          <label htmlFor="tdate" className="font-semibold">
+            {" "}
+            Select date
+          </label>
+
+          <input
+            type="date"
+            name="tdate"
+            id="tdate"
+            className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
             onChange={inputEvent}
-            value={data.energymeter}
-          >
-            <option selected>Select Machine</option>
-            <option>1</option>
-            <option>2</option>
-          </select>
+            value={data.tdate}
+          />
+        </div>
+        <div className="">
+          <label htmlFor="selectEM" className="font-semibold">
+            {" "}
+            Select Meter
+          </label>
+          <Multiselect
+            className="w-full rounded lg:text-base text-sm"
+            options={state.options} // Options to display in the dropdown
+            selectedValues={state.selectedValue} // Preselected value to persist in dropdown
+            onSelect={onSelect} // Function will trigger on select event
+            onRemove={onRemove} // Function will trigger on remove event
+            displayValue="name" // Property name to display in the dropdown options
+            id="selectEM"
+          />
         </div>
 
         <div>
-          <label htmlFor="shift" className="font-semibold"> Select Shift</label>
+          <label htmlFor="shift" className="font-semibold">
+            {" "}
+            Select Shift
+          </label>
+
           <select
             className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
             name="shift"
@@ -122,7 +173,7 @@ const ProductionDetailReport = () => {
         </div>
         <div>
           <button
-            className="w-full p-2 lg:mt-6 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
             onClick={showResult}
           >
             Show Result
@@ -130,7 +181,7 @@ const ProductionDetailReport = () => {
         </div>
         <div>
           <button
-            className="w-full p-2 lg:mt-6 bg-green-400 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-green-400 rounded font-semibold text-black"
             onClick={saveAsCSV}
           >
             Save as csv
@@ -138,7 +189,7 @@ const ProductionDetailReport = () => {
         </div>
         <div>
           <button
-            className="w-full p-2 lg:mt-6 bg-purple-400 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-purple-400 rounded font-semibold text-black"
             onClick={saveData}
           >
             Save AS PDF
@@ -161,16 +212,22 @@ const ProductionDetailReport = () => {
                   Time
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Cavity
+                  Current
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  M/C Status
+                  Frequency
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Strokes
+                  KW
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Production
+                  KWhr
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  pf
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  voltage
                 </th>
               </tr>
             </thead>
@@ -185,10 +242,12 @@ const ProductionDetailReport = () => {
                       <th>{i == 0 ? 1 : i + 1}</th>
                       <td className="px-2 py-4">{data.DATE}</td>
                       <td className="px-2 py-4">{data.TIME}</td>
-                      <td className="px-2 py-4">{data.cavity}</td>
-                      <td className="px-2 py-4">{data.mc_status}</td>
-                      <td className="px-2 py-4">{data.strokes}</td>
-                      <td className="px-2 py-4">{data.production}</td>
+                      <td className="px-2 py-4">{data.current}</td>
+                      <td className="px-2 py-4">{data.freq}</td>
+                      <td className="px-2 py-4">{data.kw}</td>
+                      <td className="px-2 py-4">{data.kwhr}</td>
+                      <td className="px-2 py-4">{data.pf}</td>
+                      <td className="px-2 py-4">{data.voltage}</td>
                     </tr>
                   </>
                 ))}
@@ -200,4 +259,4 @@ const ProductionDetailReport = () => {
   );
 };
 
-export default ProductionDetailReport;
+export default EnergySummaryReport;

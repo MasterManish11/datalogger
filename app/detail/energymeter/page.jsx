@@ -100,22 +100,22 @@ const EnergyDetailReport = () => {
             type="date"
             name="date"
             id="date"
-            className="w-full rounded p-1 border-2 border-gray-100"
+            className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
             onChange={inputEvent}
             value={data.date}
           />
         </div>
         <div>
-        <label htmlFor="energymeter" className="font-semibold"> Select EnergyMeter</label>
+        <label htmlFor="energymeter" className="font-semibold"> Select Meter</label>
 
           <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100"
+            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
             name="energymeter"
             id="energymeter"
             onChange={inputEvent}
             value={data.energymeter}
           >
-            <option selected>Select EnergyMeter</option>
+            <option selected className="">Select Meter</option>
             <option>1</option>
             <option>2</option>
           </select>
@@ -125,7 +125,7 @@ const EnergyDetailReport = () => {
         <label htmlFor="shift" className="font-semibold"> Select Shift</label>
 
           <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100"
+            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
             name="shift"
             id="shift"
             onChange={inputEvent}

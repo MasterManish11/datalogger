@@ -22,7 +22,7 @@ body {
 }
 
 body{
-  @apply bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 h-screen
+  @apply bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 min-h-screen
 }
 
 .content-container {
@@ -31,4 +31,16 @@ body{
 
 h1{
   @apply text-xl font-bold
+}
+.multiselectContainer{
+  @apply text-black
+}
+.container{
+  @apply max-w-7xl p-6 mx-auto
+}
+.realtimelabelwarpper{
+  @apply font-medium text-center bg-slate-800 text-white
+}
+.realtimedatawarpper{
+  @apply font-semibold text-center bg-slate-800
 }
