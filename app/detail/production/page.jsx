@@ -74,8 +74,8 @@ const ProductionDetailReport = () => {
 
   return (
     <div className="content-container bg-gradient-to-r from-cyan-400 to-blue-400 py-3 rounded">
-      <div className="bg-orange-300 rounded py-1">
-        <h1 className="text-center">Production Detail Report</h1>
+      <div className="py-1">
+        <h1 className="report-title">Production Detail Report</h1>
       </div>
       <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
         <div>
