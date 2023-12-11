@@ -7,9 +7,13 @@ import Loader from "./components/Loader";
 const Dashboard = () => {
   const [machineData, setMachineData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const url1 = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`;
-  const url2 = `${process.env.NEXT_PUBLIC_LOCAL_HOST}api/dashboard`;
-  const url = url2 || url1;
+  // const url1 = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`;
+  // const url2 = `${process.env.NEXT_PUBLIC_LOCAL_HOST}api/dashboard`;
+  // const url = url2 || url1;
+  const url =
+    process.env.NODE_ENV !== "production"
+      ? `${process.env.NEXT_PUBLIC_LOCAL_HOST}api/dashboard`
+      : `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`;
   useEffect(() => {
     let interval = setInterval(async () => {
       const response = await fetch(url);
