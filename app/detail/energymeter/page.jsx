@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { mkConfig, generateCsv, download } from "export-to-csv";
+import Loader from "@/app/components/Loader";
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const EnergyDetailReport = () => {
   const [answer, setAnswer] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     date: "",
     energymeter: "",
@@ -43,6 +45,7 @@ const EnergyDetailReport = () => {
   const showResult = async (event) => {
     try {
       // Prevent the default form submission behavior
+      setLoading(true);
       event.preventDefault();
 
       // Define the API endpoint
@@ -59,7 +62,7 @@ const EnergyDetailReport = () => {
 
       // Make the API request
       const response = await fetch(apiUrl, requestOptions);
-
+      setLoading(false);
       // Check if the request was successful (status code 2xx)
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);
@@ -94,7 +97,10 @@ const EnergyDetailReport = () => {
       </div>
       <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
         <div>
-        <label htmlFor="date" className="font-semibold"> Select date</label>
+          <label htmlFor="date" className="font-semibold">
+            {" "}
+            Select date
+          </label>
 
           <input
             type="date"
@@ -106,7 +112,10 @@ const EnergyDetailReport = () => {
           />
         </div>
         <div>
-        <label htmlFor="energymeter" className="font-semibold"> Select Meter</label>
+          <label htmlFor="energymeter" className="font-semibold">
+            {" "}
+            Select Meter
+          </label>
 
           <select
             className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
@@ -115,14 +124,19 @@ const EnergyDetailReport = () => {
             onChange={inputEvent}
             value={data.energymeter}
           >
-            <option selected className="">Select Meter</option>
+            <option selected className="">
+              Select Meter
+            </option>
             <option>1</option>
             <option>2</option>
           </select>
         </div>
 
         <div>
-        <label htmlFor="shift" className="font-semibold"> Select Shift</label>
+          <label htmlFor="shift" className="font-semibold">
+            {" "}
+            Select Shift
+          </label>
 
           <select
             className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
@@ -139,17 +153,26 @@ const EnergyDetailReport = () => {
           </select>
         </div>
         <div>
-          <button className="w-full lg:mt-6 p-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black" onClick={showResult}>
+          <button
+            className="w-full lg:mt-6 p-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
+            onClick={showResult}
+          >
             Show Result
           </button>
         </div>
         <div>
-          <button className="w-full lg:mt-6 p-2 bg-green-400 rounded font-semibold text-black" onClick={saveAsCSV}>
-            Save as csv
+          <button
+            className="w-full lg:mt-6 p-2 bg-green-400 rounded font-semibold text-black"
+            onClick={saveAsCSV}
+          >
+            Save AS CSV
           </button>
         </div>
         <div>
-          <button className="w-full lg:mt-6 p-2 bg-purple-400 rounded font-semibold text-black" onClick={saveData}>
+          <button
+            className="w-full lg:mt-6 p-2 bg-purple-400 rounded font-semibold text-black"
+            onClick={saveData}
+          >
             Save AS PDF
           </button>
         </div>
@@ -190,25 +213,33 @@ const EnergyDetailReport = () => {
               </tr>
             </thead>
             <tbody className="h-48 overflow-y-auto">
-              {answer &&
-                answer.map((data, i) => (
-                  <>
-                    <tr
-                      key={i}
-                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 "
-                    >
-                      <th>{i == 0 ? 1 : i + 1}</th>
-                      <td className="px-2 py-4">{data.DATE}</td>
-                      <td className="px-2 py-4">{data.TIME}</td>
-                      <td className="px-2 py-4">{data.current}</td>
-                      <td className="px-2 py-4">{data.freq}</td>
-                      <td className="px-2 py-4">{data.kw}</td>
-                      <td className="px-2 py-4">{data.kwhr}</td>
-                      <td className="px-2 py-4">{data.pf}</td>
-                      <td className="px-2 py-4">{data.voltage}</td>
-                    </tr>
-                  </>
-                ))}
+              {loading ? (
+                <>
+                  <Loader />
+                </>
+              ) : (
+                <>
+                  {answer &&
+                    answer.map((data, i) => (
+                      <>
+                        <tr
+                          key={i}
+                          className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 "
+                        >
+                          <th>{i == 0 ? 1 : i + 1}</th>
+                          <td className="px-2 py-4">{data.DATE}</td>
+                          <td className="px-2 py-4">{data.TIME}</td>
+                          <td className="px-2 py-4">{data.current}</td>
+                          <td className="px-2 py-4">{data.freq}</td>
+                          <td className="px-2 py-4">{data.kw}</td>
+                          <td className="px-2 py-4">{data.kwhr}</td>
+                          <td className="px-2 py-4">{data.pf}</td>
+                          <td className="px-2 py-4">{data.voltage}</td>
+                        </tr>
+                      </>
+                    ))}
+                </>
+              )}
             </tbody>
           </table>
         </div>
