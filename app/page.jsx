@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const url1 = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}dashboard`;
   const url2 = `${process.env.NEXT_PUBLIC_LOCAL_HOST}dashboard`;
-  const url = url1 || url2;
+  const url = url2 || url1;
   useEffect(() => {
     let interval = setInterval(async () => {
       const response = await fetch(url);
