@@ -7,8 +7,8 @@ import Loader from "./components/Loader";
 const Dashboard = () => {
   const [machineData, setMachineData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const url1 = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}dashboard`;
-  const url2 = `${process.env.NEXT_PUBLIC_LOCAL_HOST}dashboard`;
+  const url1 = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`;
+  const url2 = `${process.env.NEXT_PUBLIC_LOCAL_HOST}api/dashboard`;
   const url = url2 || url1;
   useEffect(() => {
     let interval = setInterval(async () => {
