@@ -1,10 +1,10 @@
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
+// export const dynamic = 'force-dynamic';
 async function getData() {
     const url = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`
     const res = await fetch(url,{
-        catch: 'no-cache',
-        next: { revalidate: 1 },
+        catch: 'no-store',
+        next: { revalidate: 5 },
       })
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
