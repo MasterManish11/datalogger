@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { query } from "@/app/lib/database";
-
+export const revalidate =true
 // export async function GET() {
 //   var output = [];
 //   const queryPromise1 = (i) => {

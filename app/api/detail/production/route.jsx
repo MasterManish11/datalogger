@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { query } from "@/app/lib/database";
-
+export const revalidate =true
 export async function POST(req) {
   const data = await req.json()
   const em = data.data.energymeter;
