@@ -7,8 +7,8 @@ const dbConfig = {
   waitForConnections: true,
 };
 
-const pool = mysql.createPool(dbConfig);
-
+// const pool = mysql.createPool(dbConfig);
+export const pool = mysql.createPool(dbConfig);
 export async function query({ query, values = [] }) {
   let connection;
   try {

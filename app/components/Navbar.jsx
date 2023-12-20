@@ -1,5 +1,9 @@
 "use client";
-import { Fragment, useState } from "react";
+import Image from "next/image";
+import useAuth from "../useAuth";
+import { getCookie } from "cookies-next";
+import datalogger from "../../public/datalogger.svg";
+import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
@@ -16,30 +20,32 @@ import {
   PlayCircleIcon,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import UserStatus from "./UserStatus";
+import UserStatusMobile from "./UserStatusMobile";
 
 const products = [
   {
     name: "Energymeter Detail Report",
     description: "Get a better understanding of your traffic",
-    href: "/detail/energymeter",
+    href: "/reports/detail/energymeter",
     icon: ChartPieIcon,
   },
   {
     name: "Energymeter Summary Report",
     description: "Speak directly to your customers",
-    href: "/summary/energymeter",
+    href: "/reports/summary/energymeter",
     icon: SquaresPlusIcon,
   },
   {
     name: "Production Detail Report",
     description: "Your customers’ data will be safe and secure",
-    href: "/detail/production",
+    href: "/reports/detail/production",
     icon: ChartPieIcon,
   },
   {
     name: "Production Summary Report",
     description: "Connect with third-party tools",
-    href: "#",
+    href: "/reports/summary/production",
     icon: SquaresPlusIcon,
   },
   //   { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
@@ -53,11 +59,19 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Navbar() {
+  const [currentUser, setCurrentUser] = useState("");
+  const { isLoggedIn } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+
+useEffect(()=>{
+      const loggedUser = getCookie("user")
+      setCurrentUser(loggedUser)
+},[])
 
   return (
-    <header className="">
+    <header>
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -65,10 +79,12 @@ export default function Example() {
         <div className="flex lg:flex-1 items-center space-x-2  font-semibold">
           <Link href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img
-              className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="logo"
+            <Image
+              priority
+              src={datalogger}
+              width={40}
+              height={40}
+              alt="DataloggerIcon"
             />
           </Link>
 
@@ -104,7 +120,7 @@ export default function Example() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+              <Popover.Panel className="absolute -left-8 top-full z-20 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {products.map((item) => (
                     <div
@@ -157,17 +173,15 @@ export default function Example() {
           >
             AboutUs
           </Link>
-          {/* <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
-          </Link> */}
+         
         </Popover.Group>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </Link>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-3">
+          <span className="text-base font-bold">
+            {
+              isLoggedIn && currentUser? ` Welcome ${currentUser}`:''
+            }
+          </span>
+          <UserStatus />
         </div>
       </nav>
       <Dialog
@@ -179,14 +193,19 @@ export default function Example() {
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <Link href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </Link>
+         
+            <Image
+              priority
+              src={datalogger}
+              width={40}
+              height={40}
+              alt="DataloggerIcon"
+            />
+           <span className="text-base font-bold">
+            {
+              isLoggedIn && currentUser? ` Welcome ${currentUser}`:''
+            }
+          </span>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -227,20 +246,20 @@ export default function Example() {
                     </>
                   )}
                 </Disclosure>
-                  <Link
+                <Link
                   onClick={() => setMobileMenuOpen(false)}
-                    href="/"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
+                  href="/"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  Dashboard
+                </Link>
+                <Link
                   onClick={() => setMobileMenuOpen(false)}
-                    href="/about"
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                  >
-                    AboutUs
-                  </Link>
+                  href="/about"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  AboutUs
+                </Link>
                 {/* <Link
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -249,12 +268,13 @@ export default function Example() {
                 </Link> */}
               </div>
               <div className="py-6">
-                <Link
-                  href="#"
+                {/* <Link
+                  href="/auth/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                   Log in
-                </Link>
+                </Link> */}
+                <UserStatusMobile />
               </div>
             </div>
           </div>

@@ -48,17 +48,13 @@ const EnergySummaryReport = () => {
     setIsSelected(selectedList.map((list) => list.name));
   };
 
-//   useEffect(() => {
-//     console.log("data", data);
-//   }, [data]);
-
   const showResult = async (event) => {
     try {
       // Prevent the default form submission behavior
       event.preventDefault();
 
       // Define the API endpoint
-      const apiUrl = "/api/energyconsumption";
+      const apiUrl = "/api/summary/energymeter";
 
       // Prepare the request options
       const requestOptions = {

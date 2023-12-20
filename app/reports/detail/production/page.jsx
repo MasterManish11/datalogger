@@ -33,7 +33,7 @@ const ProductionDetailReport = () => {
       event.preventDefault();
       setLoading(true);
       // Define the API endpoint
-      const apiUrl = "/api/production/detail";
+      const apiUrl = "/api/detail/production";
 
       // Prepare the request options
       const requestOptions = {
@@ -161,28 +161,28 @@ const ProductionDetailReport = () => {
       <div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:h-96 h-[484px] overflow-y-auto">
           <table
-            className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            className="w-full  min-w-full border-collapse text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
             id="table"
           >
-            <thead className="text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
+            <thead className="sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
               <tr className="">
                 <th></th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="text-center py-3">
                   Date
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="text-center py-3">
                   Time
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="text-center py-3">
                   Cavity
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="text-center py-3">
                   M/C Status
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="text-center py-3">
                   Strokes
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="text-center py-3">
                   Production
                 </th>
               </tr>
@@ -202,12 +202,12 @@ const ProductionDetailReport = () => {
                           className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 "
                         >
                           <th>{i == 0 ? 1 : i + 1}</th>
-                          <td className="px-2 py-4">{data.DATE}</td>
-                          <td className="px-2 py-4">{data.TIME}</td>
-                          <td className="px-2 py-4">{data.cavity}</td>
-                          <td className="px-2 py-4">{data.mc_status}</td>
-                          <td className="px-2 py-4">{data.strokes}</td>
-                          <td className="px-2 py-4">{data.production}</td>
+                          <td className="text-center py-2">{data.DATE}</td>
+                          <td className="text-center py-2">{data.TIME}</td>
+                          <td className="text-center py-2">{data.cavity}</td>
+                          <td className="text-center py-2">{data.mc_status}</td>
+                          <td className="text-center py-2">{data.strokes}</td>
+                          <td className="text-center py-2">{data.production}</td>
                         </tr>
                       </>
                     ))}

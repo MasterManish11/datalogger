@@ -49,5 +49,4 @@ export async function POST(req) {
   // const em = data.data.energymeter;
   // const date= data.data.date.split("-")
   // const shift = data.data.shift
-  console.log("data",data)
 }

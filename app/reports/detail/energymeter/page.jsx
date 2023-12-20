@@ -27,21 +27,7 @@ const EnergyDetailReport = () => {
     });
   };
 
-  // const showResult = async (e) => {
-  //   e.preventDefault();
-  //   const url = "/api/energyconsumption/detail";
-  //   const result = await fetch(url, {
-  //     method: "POST",
-  //     body: JSON.stringify({ data }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   const response = await result.json();
-  //   // console.log("response",response)
-  //   setAnswer(response);
-  // };
-
+ 
   const showResult = async (event) => {
     try {
       // Prevent the default form submission behavior
@@ -49,7 +35,7 @@ const EnergyDetailReport = () => {
       event.preventDefault();
 
       // Define the API endpoint
-      const apiUrl = "/api/energyconsumption/detail";
+      const apiUrl = "/api/detail/energymeter";
 
       // Prepare the request options
       const requestOptions = {
@@ -180,34 +166,34 @@ const EnergyDetailReport = () => {
       <div>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:h-96 h-[484px] overflow-y-auto">
           <table
-            className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            className="w-full min-w-full border-collapse text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
             id="table"
           >
-            <thead className="text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
+            <thead className="sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
               <tr className="">
                 <th></th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   Date
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   Time
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   Current
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   Frequency
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   KW
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   KWhr
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   pf
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="py-3 text-center">
                   voltage
                 </th>
               </tr>
@@ -227,14 +213,14 @@ const EnergyDetailReport = () => {
                           className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 "
                         >
                           <th>{i == 0 ? 1 : i + 1}</th>
-                          <td className="px-2 py-4">{data.DATE}</td>
-                          <td className="px-2 py-4">{data.TIME}</td>
-                          <td className="px-2 py-4">{data.current}</td>
-                          <td className="px-2 py-4">{data.freq}</td>
-                          <td className="px-2 py-4">{data.kw}</td>
-                          <td className="px-2 py-4">{data.kwhr}</td>
-                          <td className="px-2 py-4">{data.pf}</td>
-                          <td className="px-2 py-4">{data.voltage}</td>
+                          <td className="py-2 text-center">{data.DATE}</td>
+                          <td className="py-2 text-center">{data.TIME}</td>
+                          <td className="py-2 text-center">{data.current}</td>
+                          <td className="py-2 text-center">{data.freq}</td>
+                          <td className="py-2 text-center">{data.kw}</td>
+                          <td className="py-2 text-center">{data.kwhr}</td>
+                          <td className="py-2 text-center">{data.pf}</td>
+                          <td className="py-2 text-center">{data.voltage}</td>
                         </tr>
                       </>
                     ))}

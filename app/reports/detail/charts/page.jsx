@@ -37,7 +37,7 @@ const Charts =  () => {
 
       // Update state with the response data
       // setAnswer(responseData);
-      console.log("responseData",responseData)
+      // console.log("responseData",responseData)
 
       //     //   setChartData({
       //     //     options: {
