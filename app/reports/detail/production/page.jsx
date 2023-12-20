@@ -127,7 +127,6 @@ const ProductionDetailReport = () => {
             value={data.shift}
           >
             <option selected>Select Shift</option>
-            <option>All</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
