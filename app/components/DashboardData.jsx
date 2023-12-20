@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useEffect, useState } from "react";
 import MachineData from "./MachineData";
 import Loader from "./Loader";
@@ -10,13 +10,21 @@ const DashboardData = () => {
     process.env.NODE_ENV !== "production"
       ? `${process.env.NEXT_PUBLIC_LOCAL_HOST}api/dashboard`
       : `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`;
+
+  // useEffect(async () => {
+  //   const response = await fetch(url);
+  //   const data = await response.json();
+  //   setMachineData(data);
+  //   setLoading(false);
+  // }, 1000);
+
   useEffect(() => {
     let interval = setInterval(async () => {
       const response = await fetch(url);
       const data = await response.json();
       setMachineData(data);
       setLoading(false);
-    }, 1000);
+    }, 5000);
     return () => {
       clearInterval(interval);
     };
