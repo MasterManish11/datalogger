@@ -1,7 +1,7 @@
 import React from 'react'
 async function getData() {
     const url = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`
-    const res = await fetch(url,{ next: { revalidate: 10 } })
+    const res = await fetch(url,{ cache: 'force-cache' })
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
    
