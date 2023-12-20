@@ -11,13 +11,21 @@ const DashboardData = () => {
       ? `${process.env.NEXT_PUBLIC_LOCAL_HOST}api/dashboard`
       : `${process.env.NEXT_PUBLIC_DOMAIN_NAME}api/dashboard`;
 
-  useEffect(() => {
-    let interval = setInterval(async () => {
-      const response = await fetch(url);
+  const fetchData = async () => {
+    try {
+      // Fetch data from your API
+      const response = await fetch(url,{ cache: 'no-store' });
       const data = await response.json();
-      console.log("data",data)
       setMachineData(data);
       setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    let interval = setInterval(async () => {
+      fetchData();
     }, 1000);
     return () => {
       clearInterval(interval);
