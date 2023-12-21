@@ -26,6 +26,7 @@ const EnergySummaryReport = () => {
   const [data, setData] = useState({
     fdate: "",
     tdate: "",
+    energymeter:"",
     shift: "",
   });
 
@@ -104,7 +105,7 @@ const EnergySummaryReport = () => {
         <div>
           <label htmlFor="fdate" className="font-semibold">
             {" "}
-            from date
+            From date
           </label>
 
           <input
@@ -119,7 +120,7 @@ const EnergySummaryReport = () => {
         <div>
           <label htmlFor="tdate" className="font-semibold">
             {" "}
-            Select date
+            To date
           </label>
 
           <input
@@ -136,7 +137,18 @@ const EnergySummaryReport = () => {
             {" "}
             Select Meter
           </label>
-          <Multiselect
+          <select
+            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
+            name="energymeter"
+            id="energymeter"
+            onChange={inputEvent}
+            value={data.energymeter}
+          >
+            <option selected>Select Meter</option>
+            <option>1</option>
+            <option>2</option>
+          </select>
+          {/* <Multiselect
             className="w-full rounded lg:text-base text-sm"
             options={state.options} // Options to display in the dropdown
             selectedValues={state.selectedValue} // Preselected value to persist in dropdown
@@ -144,7 +156,7 @@ const EnergySummaryReport = () => {
             onRemove={onRemove} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
             id="selectEM"
-          />
+          /> */}
         </div>
 
         <div>

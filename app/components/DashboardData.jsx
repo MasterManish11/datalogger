@@ -14,7 +14,7 @@ const DashboardData = () => {
   const fetchData = async () => {
     try {
       // Fetch data from your API
-      const response = await fetch(url,{ cache: 'no-store' });
+      const response = await fetch(url, { cache: 'no-store' });
       const data = await response.json();
       setMachineData(data);
       setLoading(false);
@@ -22,6 +22,10 @@ const DashboardData = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   useEffect(() => {
     let interval = setInterval(async () => {

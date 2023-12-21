@@ -46,7 +46,31 @@ export const revalidate =true
 // }
 export async function POST(req) {
   const data = await req.json()
-  // const em = data.data.energymeter;
-  // const date= data.data.date.split("-")
-  // const shift = data.data.shift
+  const em = data.data.energymeter;
+  const fdate= data.data.fdate.split("-")
+  const tdate= data.data.tdate.split("-")
+  const shift = data.data.shift
+
+  function findDatesBetween(startDateStr, endDateStr) {
+    const start = new Date(startDateStr);
+    const end = new Date(endDateStr);
+    const allDates = [];
+  
+    // Loop through each day and push it to the array
+    for (let date = start; date <= end; date.setDate(date.getDate() + 1)) {
+      allDates.push(new Date(date));
+    }
+  
+    // return allDates.map((date) => date.toDateString());
+    return allDates.map((date) => date);
+  }
+  
+  // Example usage:
+  const startDate = '2023-01-01'; // Replace with your desired start date
+  const endDate = '2023-01-10'; // Replace with your desired end date
+  
+  const result = findDatesBetween(startDate, endDate);
+  console.log('All Dates:', result);
+  
+
 }

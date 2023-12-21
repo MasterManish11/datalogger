@@ -5,7 +5,7 @@ const Dashboard = () => {
     <>
     <Navbar />
     <div className="container">
-     <DashboardData />
+     {/* <DashboardData /> */}
     </div>
     </>
   );
