@@ -4,6 +4,7 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Multiselect from "multiselect-react-dropdown";
 import { mkConfig, generateCsv, download } from "export-to-csv";
+import Loader from "@/app/components/Loader";
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const EnergySummaryReport = () => {
@@ -22,11 +23,12 @@ const EnergySummaryReport = () => {
     ],
   };
   const [isSelected, setIsSelected] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState([]);
   const [data, setData] = useState({
     fdate: "",
     tdate: "",
-    energymeter:"",
+    energymeter: "",
     shift: "",
   });
 
@@ -51,6 +53,8 @@ const EnergySummaryReport = () => {
 
   const showResult = async (event) => {
     try {
+      setLoading(true);
+
       // Prevent the default form submission behavior
       event.preventDefault();
 
@@ -63,11 +67,12 @@ const EnergySummaryReport = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data,isSelected }), // Assuming `data` is defined elsewhere
+        body: JSON.stringify({ data, isSelected }), // Assuming `data` is defined elsewhere
       };
 
       // Make the API request
       const response = await fetch(apiUrl, requestOptions);
+      setLoading(false);
 
       // Check if the request was successful (status code 2xx)
       if (!response.ok) {
@@ -76,9 +81,10 @@ const EnergySummaryReport = () => {
 
       // Parse the JSON response
       const responseData = await response.json();
-
+      // console.log("responseData",responseData)
       // Update state with the response data
       setAnswer(responseData);
+      console.log('responseData',responseData)
     } catch (error) {
       // Handle errors, e.g., log them or show an error message to the user
       console.error("Error in showResult:", error);
@@ -204,60 +210,49 @@ const EnergySummaryReport = () => {
         </div>
       </div>
       <div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:h-96 h-[484px] overflow-y-auto">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:min-h-[200px] min-h-[484px] overflow-y-auto">
           <table
-            className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            className="w-full min-w-full border-collapse text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
             id="table"
           >
-            <thead className="text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
-              <tr className="">
-                <th></th>
-                <th scope="col" className="px-6 py-3">
+            <thead className="sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th>No</th>
+                <th scope="col" className="py-2 text-center">
                   Date
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Time
+                <th scope="col" className="py-2 text-center">
+                  Energymeter
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Current
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Frequency
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  KW
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  KWhr
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  pf
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  voltage
+                <th scope="col" className="py-2 text-center">
+                  Kwhr
                 </th>
               </tr>
             </thead>
             <tbody className="h-48 overflow-y-auto">
-              {answer &&
-                answer.map((data, i) => (
-                  <>
-                    <tr
-                      key={i}
-                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 "
-                    >
-                      <th>{i == 0 ? 1 : i + 1}</th>
-                      <td className="px-2 py-4">{data.DATE}</td>
-                      <td className="px-2 py-4">{data.TIME}</td>
-                      <td className="px-2 py-4">{data.current}</td>
-                      <td className="px-2 py-4">{data.freq}</td>
-                      <td className="px-2 py-4">{data.kw}</td>
-                      <td className="px-2 py-4">{data.kwhr}</td>
-                      <td className="px-2 py-4">{data.pf}</td>
-                      <td className="px-2 py-4">{data.voltage}</td>
-                    </tr>
-                  </>
-                ))}
+              {loading ? (
+                <>
+                  <Loader />
+                </>
+              ) : (
+                <>
+                  {answer &&
+                    answer.map((data, i) => (
+                      <React.Fragment key={i}>
+                        <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 ">
+                          <th>{i == 0 ? 1 : i + 1}</th>
+                          <td className="py-2 text-center">{data.date}</td>
+                          <td className="py-2 text-center">
+                            {data.energymeter}
+                          </td>
+                          <td className="py-2 text-center">
+                            {data.kwhr.toFixed(2)}
+                          </td>
+                        </tr>
+                      </React.Fragment>
+                    ))}
+                </>
+              )}
             </tbody>
           </table>
         </div>

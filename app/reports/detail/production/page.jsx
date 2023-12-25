@@ -50,11 +50,10 @@ const ProductionDetailReport = () => {
       // Check if the request was successful (status code 2xx)
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);
-      }
+      } 
 
       // Parse the JSON response
       const responseData = await response.json();
-
       // Update state with the response data
       setAnswer(responseData);
       setLoading(false);
@@ -165,7 +164,7 @@ const ProductionDetailReport = () => {
           >
             <thead className="sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
               <tr className="">
-                <th></th>
+                <th>No</th>
                 <th scope="col" className="text-center py-3">
                   Date
                 </th>

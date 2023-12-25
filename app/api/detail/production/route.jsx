@@ -9,7 +9,7 @@ export async function POST(req) {
   
   try {
       // const sql = `SELECT * FROM rishabhplastic.rishabhem${em>9?em:`0${em}`} WHERE DATE = '18-06-2023' AND shift = ${shift}`;
-      const sql = `SELECT * FROM rishabhplastic.rishabhprd${em>9?em:`0${em}`} WHERE DATE = '${date[2]}-${date[1]}-${date[0]}' AND shift = ${shift}`;
+      const sql = `SELECT * FROM u967600739_datalogger.rishabhprd${em>9?em:`0${em}`} WHERE DATE = '${date[2]}-${date[1]}-${date[0]}' AND shift = ${shift}`;
         const users = await query({
           query: sql,
           values: [],

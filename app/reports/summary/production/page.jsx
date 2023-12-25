@@ -1,17 +1,34 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Multiselect from "multiselect-react-dropdown";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import Loader from "@/app/components/Loader";
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
-const EnergyDetailReport = () => {
-  const [answer, setAnswer] = useState([]);
+const ProductionSummaryReport = () => {
+  const state = {
+    options: [
+      { name: "1", id: 1 },
+      { name: "2", id: 2 },
+      //   { name: "3", id: 3 },
+      //   { name: "4", id: 4 },
+      //   { name: "5", id: 5 },
+      //   { name: "6", id: 6 },
+      //   { name: "7", id: 7 },
+      //   { name: "8", id: 8 },
+      //   { name: "9", id: 9 },
+      //   { name: "10", id: 10 },
+    ],
+  };
+  const [isSelected, setIsSelected] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [answer, setAnswer] = useState([]);
   const [data, setData] = useState({
-    date: "",
-    energymeter: "",
+    fdate: "",
+    tdate: "",
+    machine: "",
     shift: "",
   });
 
@@ -27,15 +44,22 @@ const EnergyDetailReport = () => {
     });
   };
 
- 
+  const onSelect = (selectedList) => {
+    setIsSelected(selectedList.map((list) => list.name));
+  };
+  const onRemove = (selectedList) => {
+    setIsSelected(selectedList.map((list) => list.name));
+  };
+
   const showResult = async (event) => {
     try {
-      // Prevent the default form submission behavior
       setLoading(true);
+
+      // Prevent the default form submission behavior
       event.preventDefault();
 
       // Define the API endpoint
-      const apiUrl = "/api/detail/energymeter";
+      const apiUrl = "/api/summary/production";
 
       // Prepare the request options
       const requestOptions = {
@@ -43,12 +67,13 @@ const EnergyDetailReport = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data }), // Assuming `data` is defined elsewhere
+        body: JSON.stringify({ data, isSelected }), // Assuming `data` is defined elsewhere
       };
 
       // Make the API request
       const response = await fetch(apiUrl, requestOptions);
       setLoading(false);
+
       // Check if the request was successful (status code 2xx)
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);
@@ -56,7 +81,7 @@ const EnergyDetailReport = () => {
 
       // Parse the JSON response
       const responseData = await response.json();
-
+      // console.log("responseData",responseData)
       // Update state with the response data
       setAnswer(responseData);
     } catch (error) {
@@ -76,46 +101,70 @@ const EnergyDetailReport = () => {
     download(csvConfig)(csv);
   };
 
+
+
+
   return (
-    <div className="content-container py-3 rounded">
+    <div className="content-container bg-gradient-to-r from-cyan-400 to-blue-400 py-3 rounded">
       <div className="py-1">
-        <h1 className="report-title">EnergyMeter Detail Report</h1>
+        <h1 className="report-title">Production Summary Report</h1>
       </div>
-      <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
+      <div className="grid lg:grid-cols-7 lg:gap-4 py-2 grid-cols-3 gap-4">
         <div>
-          <label htmlFor="date" className="font-semibold">
+          <label htmlFor="fdate" className="font-semibold">
             {" "}
-            Select date
+            From date
           </label>
 
           <input
             type="date"
-            name="date"
-            id="date"
+            name="fdate"
+            id="fdate"
             className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
             onChange={inputEvent}
-            value={data.date}
+            value={data.fdate}
           />
         </div>
         <div>
-          <label htmlFor="energymeter" className="font-semibold">
+          <label htmlFor="tdate" className="font-semibold">
             {" "}
-            Select Meter
+            To date
           </label>
 
+          <input
+            type="date"
+            name="tdate"
+            id="tdate"
+            className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
+            onChange={inputEvent}
+            value={data.tdate}
+          />
+        </div>
+        <div className="">
+          <label htmlFor="selectEM" className="font-semibold">
+            {" "}
+            Select Machine
+          </label>
           <select
             className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="energymeter"
-            id="energymeter"
+            name="machine"
+            id="machine"
             onChange={inputEvent}
-            value={data.energymeter}
+            value={data.machine}
           >
-            <option defaultValue>
-              Select Meter
-            </option>
+            <option selected>Select Machine</option>
             <option>1</option>
             <option>2</option>
           </select>
+          {/* <Multiselect
+            className="w-full rounded lg:text-base text-sm"
+            options={state.options} // Options to display in the dropdown
+            selectedValues={state.selectedValue} // Preselected value to persist in dropdown
+            onSelect={onSelect} // Function will trigger on select event
+            onRemove={onRemove} // Function will trigger on remove event
+            displayValue="name" // Property name to display in the dropdown options
+            id="selectEM"
+          /> */}
         </div>
 
         <div>
@@ -131,7 +180,7 @@ const EnergyDetailReport = () => {
             onChange={inputEvent}
             value={data.shift}
           >
-            <option defaultValue>Select Shift</option>
+            <option selected>Select Shift</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -150,7 +199,7 @@ const EnergyDetailReport = () => {
             className="w-full lg:mt-6 p-2 bg-green-400 rounded font-semibold text-black"
             onClick={saveAsCSV}
           >
-            Save AS CSV
+            Save as csv
           </button>
         </div>
         <div>
@@ -163,7 +212,7 @@ const EnergyDetailReport = () => {
         </div>
       </div>
       <div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:h-96 h-[484px] overflow-y-auto">
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:min-h-[200px] min-h-[484px] overflow-y-auto">
           <table
             className="w-full min-w-full border-collapse text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
             id="table"
@@ -171,29 +220,23 @@ const EnergyDetailReport = () => {
             <thead className="sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th>No</th>
-                <th scope="col" className="py-3 text-center">
+                <th scope="col" className="py-2 text-center">
                   Date
                 </th>
-                <th scope="col" className="py-3 text-center">
-                  Time
+                <th scope="col" className="py-2 text-center">
+                  Machine
                 </th>
-                <th scope="col" className="py-3 text-center">
-                  Current
+                <th scope="col" className="py-2 text-center">
+                  Runtime
                 </th>
-                <th scope="col" className="py-3 text-center">
-                  Frequency
+                <th scope="col" className="py-2 text-center">
+                  Stoptime
                 </th>
-                <th scope="col" className="py-3 text-center">
-                  KW
+                <th scope="col" className="py-2 text-center">
+                  Efficiency
                 </th>
-                <th scope="col" className="py-3 text-center">
-                  KWhr
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  pf
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  voltage
+                <th scope="col" className="py-2 text-center">
+                  Production
                 </th>
               </tr>
             </thead>
@@ -207,17 +250,24 @@ const EnergyDetailReport = () => {
                   {answer &&
                     answer.map((data, i) => (
                       <React.Fragment key={i}>
-                        <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 "
-                        >
+                        <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 ">
                           <th>{i == 0 ? 1 : i + 1}</th>
-                          <td className="py-2 text-center">{data.DATE}</td>
-                          <td className="py-2 text-center">{data.TIME}</td>
-                          <td className="py-2 text-center">{data.current}</td>
-                          <td className="py-2 text-center">{data.freq}</td>
-                          <td className="py-2 text-center">{data.kw}</td>
-                          <td className="py-2 text-center">{data.kwhr}</td>
-                          <td className="py-2 text-center">{data.pf}</td>
-                          <td className="py-2 text-center">{data.voltage}</td>
+                          <td className="py-2 text-center">{data.date}</td>
+                          <td className="py-2 text-center">
+                            {data.machine}
+                          </td>
+                          <td className="py-2 text-center">
+                            {`${data.runTime.hours}H ${data.runTime.minutes}M`}
+                          </td>
+                          <td className="py-2 text-center">
+                            {`${data.stopTime.hours}H ${data.stopTime.minutes}M`}
+                          </td>
+                          <td className="py-2 text-center">
+                            {data.efficiency}
+                          </td>
+                          <td className="py-2 text-center">
+                            {data.production}
+                          </td>
                         </tr>
                       </React.Fragment>
                     ))}
@@ -231,4 +281,4 @@ const EnergyDetailReport = () => {
   );
 };
 
-export default EnergyDetailReport;
+export default ProductionSummaryReport;
