@@ -1,9 +1,12 @@
 "use client";
 import React, { useState } from "react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import Loader from "@/app/components/Loader";
+import KwhrLineChart from "@/app/components/KwhrLineChart";
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const EnergyDetailReport = () => {
@@ -27,7 +30,6 @@ const EnergyDetailReport = () => {
     });
   };
 
- 
   const showResult = async (event) => {
     try {
       // Prevent the default form submission behavior
@@ -77,13 +79,16 @@ const EnergyDetailReport = () => {
   };
 
   return (
-    <div className="content-container py-3 rounded">
+    <div className="content-container">
       <div className="py-1">
         <h1 className="report-title">EnergyMeter Detail Report</h1>
       </div>
       <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
         <div>
-          <label htmlFor="date" className="font-semibold">
+          <label
+            htmlFor="date"
+            className="sm:font-semibold font-medium sm:text-base text-sm"
+          >
             {" "}
             Select date
           </label>
@@ -98,7 +103,10 @@ const EnergyDetailReport = () => {
           />
         </div>
         <div>
-          <label htmlFor="energymeter" className="font-semibold">
+          <label
+            htmlFor="energymeter"
+            className="sm:font-semibold font-medium sm:text-base text-sm"
+          >
             {" "}
             Select Meter
           </label>
@@ -110,16 +118,17 @@ const EnergyDetailReport = () => {
             onChange={inputEvent}
             value={data.energymeter}
           >
-            <option defaultValue>
-              Select Meter
-            </option>
+            <option defaultValue>Select Meter</option>
             <option>1</option>
             <option>2</option>
           </select>
         </div>
 
         <div>
-          <label htmlFor="shift" className="font-semibold">
+          <label
+            htmlFor="shift"
+            className="sm:font-semibold font-medium sm:text-base text-sm"
+          >
             {" "}
             Select Shift
           </label>
@@ -142,7 +151,7 @@ const EnergyDetailReport = () => {
             className="w-full lg:mt-6 p-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
             onClick={showResult}
           >
-            Show Result
+            View
           </button>
         </div>
         <div>
@@ -163,69 +172,86 @@ const EnergyDetailReport = () => {
         </div>
       </div>
       <div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:h-96 h-[484px] overflow-y-auto">
-          <table
-            className="w-full min-w-full border-collapse text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-            id="table"
-          >
-            <thead className="sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th>No</th>
-                <th scope="col" className="py-3 text-center">
-                  Date
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  Time
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  Current
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  Frequency
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  KW
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  KWhr
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  pf
-                </th>
-                <th scope="col" className="py-3 text-center">
-                  voltage
-                </th>
-              </tr>
-            </thead>
-            <tbody className="h-48 overflow-y-auto">
-              {loading ? (
-                <>
-                  <Loader />
-                </>
-              ) : (
-                <>
-                  {answer &&
-                    answer.map((data, i) => (
-                      <React.Fragment key={i}>
-                        <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 "
-                        >
-                          <th>{i == 0 ? 1 : i + 1}</th>
-                          <td className="py-2 text-center">{data.DATE}</td>
-                          <td className="py-2 text-center">{data.TIME}</td>
-                          <td className="py-2 text-center">{data.current}</td>
-                          <td className="py-2 text-center">{data.freq}</td>
-                          <td className="py-2 text-center">{data.kw}</td>
-                          <td className="py-2 text-center">{data.kwhr}</td>
-                          <td className="py-2 text-center">{data.pf}</td>
-                          <td className="py-2 text-center">{data.voltage}</td>
-                        </tr>
-                      </React.Fragment>
-                    ))}
-                </>
-              )}
-            </tbody>
-          </table>
-        </div>
+        <Tabs>
+          <TabList>
+            <Tab>Table View</Tab>
+            <Tab>Graphical view</Tab>
+          </TabList>
+          <TabPanel>
+            <div className="tableParent">
+              <table className="tableContainer" id="table">
+                <thead className="thead">
+                  <tr>
+                    <th>No</th>
+                    <th scope="col" className="py-3 text-center">
+                      Date
+                    </th>
+                    <th scope="col" className="py-3 text-center">
+                      Time
+                    </th>
+                    <th scope="col" className="py-3 text-center">
+                      Current
+                    </th>
+                    <th scope="col" className="py-3 text-center">
+                      Frequency
+                    </th>
+                    <th scope="col" className="py-3 text-center">
+                      KW
+                    </th>
+                    <th scope="col" className="py-3 text-center">
+                      KWhr
+                    </th>
+                    <th scope="col" className="py-3 text-center">
+                      pf
+                    </th>
+                    <th scope="col" className="py-3 text-center">
+                      voltage
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="h-48 overflow-y-auto">
+                  {loading ? (
+                    <tr>
+                      <td colSpan="9" className="py-2 text-center">
+                        <Loader />
+                      </td>
+                    </tr>
+                  ) : (
+                    <>
+                      {answer &&
+                        answer.map((data, i) => (
+                          <React.Fragment key={i}>
+                            <tr className="tableRow">
+                              <th>{i == 0 ? 1 : i + 1}</th>
+                              <td className="py-2 text-center">{data.DATE}</td>
+                              <td className="py-2 text-center">{data.TIME}</td>
+                              <td className="py-2 text-center">
+                                {data.current}
+                              </td>
+                              <td className="py-2 text-center">{data.freq}</td>
+                              <td className="py-2 text-center">{data.kw}</td>
+                              <td className="py-2 text-center">{data.kwhr}</td>
+                              <td className="py-2 text-center">{data.pf}</td>
+                              <td className="py-2 text-center">
+                                {data.voltage}
+                              </td>
+                            </tr>
+                          </React.Fragment>
+                        ))}
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            {/* <div className="sm:w-2/3 sm:mx-auto w-full">
+              <h1>Production vs Time</h1>
+              <Line data={lineGraphData} options={options} />
+            </div> */}
+            <KwhrLineChart data={answer} />
+          </TabPanel>
+        </Tabs>
       </div>
     </div>
   );

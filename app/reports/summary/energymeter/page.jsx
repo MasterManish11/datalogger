@@ -1,9 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Multiselect from "multiselect-react-dropdown";
 import { mkConfig, generateCsv, download } from "export-to-csv";
+import KwhrBarChart from "@/app/components/KwhrBarChart";
 import Loader from "@/app/components/Loader";
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
@@ -44,12 +47,12 @@ const EnergySummaryReport = () => {
     });
   };
 
-  const onSelect = (selectedList) => {
-    setIsSelected(selectedList.map((list) => list.name));
-  };
-  const onRemove = (selectedList) => {
-    setIsSelected(selectedList.map((list) => list.name));
-  };
+  // const onSelect = (selectedList) => {
+  //   setIsSelected(selectedList.map((list) => list.name));
+  // };
+  // const onRemove = (selectedList) => {
+  //   setIsSelected(selectedList.map((list) => list.name));
+  // };
 
   const showResult = async (event) => {
     try {
@@ -82,7 +85,6 @@ const EnergySummaryReport = () => {
       // Parse the JSON response
       const responseData = await response.json();
       // console.log("responseData",responseData)
-      // Update state with the response data
       setAnswer(responseData);
       console.log('responseData',responseData)
     } catch (error) {
@@ -103,11 +105,11 @@ const EnergySummaryReport = () => {
   };
 
   return (
-    <div className="content-container bg-gradient-to-r from-cyan-400 to-blue-400 py-3 rounded">
+    <div className="content-container">
       <div className="py-1">
         <h1 className="report-title">EnergyMeter Summary Report</h1>
       </div>
-      <div className="grid lg:grid-cols-7 lg:gap-4 py-2 grid-cols-3 gap-4">
+      <div className="grid lg:grid-cols-7 lg:gap-4 py-2 sm:grid-cols-4 sm:gap-4 grid-cols-2 gap-4">
         <div>
           <label htmlFor="fdate" className="font-semibold">
             {" "}
@@ -189,7 +191,7 @@ const EnergySummaryReport = () => {
             className="w-full lg:mt-6 p-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
             onClick={showResult}
           >
-            Show Result
+            View
           </button>
         </div>
         <div>
@@ -210,12 +212,20 @@ const EnergySummaryReport = () => {
         </div>
       </div>
       <div>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:min-h-[200px] min-h-[484px] overflow-y-auto">
+
+      <Tabs>
+          <TabList>
+            <Tab>Table View</Tab>
+            <Tab>Graphical view</Tab>
+          </TabList>
+
+          <TabPanel>
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:min-h-[200px] min-h-[484px] overflow-y-auto">
           <table
-            className="w-full min-w-full border-collapse text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+            className="tableContainer"
             id="table"
           >
-            <thead className="sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400">
+            <thead className="thead">
               <tr>
                 <th>No</th>
                 <th scope="col" className="py-2 text-center">
@@ -231,15 +241,17 @@ const EnergySummaryReport = () => {
             </thead>
             <tbody className="h-48 overflow-y-auto">
               {loading ? (
-                <>
+                <tr>
+                <td colSpan="9" className="py-2 text-center">
                   <Loader />
-                </>
+                </td>
+              </tr>
               ) : (
                 <>
                   {answer &&
                     answer.map((data, i) => (
                       <React.Fragment key={i}>
-                        <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 ">
+                        <tr className="tableRow">
                           <th>{i == 0 ? 1 : i + 1}</th>
                           <td className="py-2 text-center">{data.date}</td>
                           <td className="py-2 text-center">
@@ -256,6 +268,15 @@ const EnergySummaryReport = () => {
             </tbody>
           </table>
         </div>
+          </TabPanel>
+          <TabPanel>
+            {answer.length > 0 && <KwhrBarChart data={answer} />}
+          </TabPanel>
+        </Tabs>
+
+
+
+       
       </div>
     </div>
   );
