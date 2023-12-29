@@ -109,9 +109,8 @@ const ProductionSummaryReport = () => {
         <h1 className="report-title">Production Summary Report</h1>
       </div>
       <div className="grid lg:grid-cols-7 lg:gap-4 py-2 sm:grid-cols-4 sm:gap-4 grid-cols-2 gap-4"  >
-        <div>
+        <div className="flex flex-col">
           <label htmlFor="fdate" className="font-semibold">
-            {" "}
             From date
           </label>
 
@@ -124,7 +123,7 @@ const ProductionSummaryReport = () => {
             value={data.fdate}
           />
         </div>
-        <div>
+        <div className="flex flex-col">
           <label htmlFor="tdate" className="font-semibold">
             {" "}
             To date
@@ -139,7 +138,7 @@ const ProductionSummaryReport = () => {
             value={data.tdate}
           />
         </div>
-        <div className="">
+        <div className="flex flex-col">
           <label htmlFor="selectEM" className="font-semibold">
             {" "}
             Select Machine
@@ -167,8 +166,7 @@ const ProductionSummaryReport = () => {
         </div>
 
         <div>
-          <label htmlFor="shift" className="font-semibold">
-            {" "}
+          <label htmlFor="shift" className="font-semibold flex flex-col">
             Select Shift
           </label>
 

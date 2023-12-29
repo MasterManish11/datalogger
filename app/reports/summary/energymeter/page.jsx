@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import jsPDF from "jspdf";
@@ -108,9 +108,8 @@ const EnergySummaryReport = () => {
         <h1 className="report-title">EnergyMeter Summary Report</h1>
       </div>
       <div className="grid lg:grid-cols-7 lg:gap-4 py-2 sm:grid-cols-4 sm:gap-4 grid-cols-2 gap-4">
-        <div>
+        <div className='flex flex-col'>
           <label htmlFor="fdate" className="font-semibold">
-            {" "}
             From date
           </label>
 
@@ -123,9 +122,8 @@ const EnergySummaryReport = () => {
             value={data.fdate}
           />
         </div>
-        <div>
+        <div className='flex flex-col'>
           <label htmlFor="tdate" className="font-semibold">
-            {" "}
             To date
           </label>
 
@@ -138,9 +136,8 @@ const EnergySummaryReport = () => {
             value={data.tdate}
           />
         </div>
-        <div className="">
+        <div className='flex flex-col'>
           <label htmlFor="selectEM" className="font-semibold">
-            {" "}
             Select Meter
           </label>
           <select
@@ -165,9 +162,8 @@ const EnergySummaryReport = () => {
           /> */}
         </div>
 
-        <div>
+        <div className='flex flex-col'>
           <label htmlFor="shift" className="font-semibold">
-            {" "}
             Select Shift
           </label>
 

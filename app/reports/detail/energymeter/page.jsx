@@ -84,12 +84,11 @@ const EnergyDetailReport = () => {
         <h1 className="report-title">EnergyMeter Detail Report</h1>
       </div>
       <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor="date"
             className="sm:font-semibold font-medium sm:text-base text-sm"
           >
-            {" "}
             Select date
           </label>
 
@@ -102,12 +101,11 @@ const EnergyDetailReport = () => {
             value={data.date}
           />
         </div>
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor="energymeter"
             className="sm:font-semibold font-medium sm:text-base text-sm"
           >
-            {" "}
             Select Meter
           </label>
 
@@ -124,12 +122,11 @@ const EnergyDetailReport = () => {
           </select>
         </div>
 
-        <div>
+        <div className='flex flex-col'>
           <label
             htmlFor="shift"
             className="sm:font-semibold font-medium sm:text-base text-sm"
           >
-            {" "}
             Select Shift
           </label>
 
