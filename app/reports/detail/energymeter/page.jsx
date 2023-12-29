@@ -144,6 +144,7 @@ const EnergyDetailReport = () => {
             <option>1</option>
             <option>2</option>
             <option>3</option>
+            <option>ALL</option>
           </select>
         </div>
         <div>
@@ -183,28 +184,28 @@ const EnergyDetailReport = () => {
                 <thead className="thead">
                   <tr>
                     <th>No</th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       Date
                     </th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       Time
                     </th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       Current
                     </th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       Frequency
                     </th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       KW
                     </th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       KWhr
                     </th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       pf
                     </th>
-                    <th scope="col" className="py-3 text-center">
+                    <th scope="col" className="py-3 text-center px-2">
                       voltage
                     </th>
                   </tr>
@@ -223,16 +224,16 @@ const EnergyDetailReport = () => {
                           <React.Fragment key={i}>
                             <tr className="tableRow">
                               <th>{i == 0 ? 1 : i + 1}</th>
-                              <td className="py-2 text-center">{data.DATE}</td>
-                              <td className="py-2 text-center">{data.TIME}</td>
-                              <td className="py-2 text-center">
+                              <td className="py-2 text-center px-2">{data.DATE}</td>
+                              <td className="py-2 text-center px-2">{data.TIME}</td>
+                              <td className="py-2 text-center px-2">
                                 {data.current}
                               </td>
-                              <td className="py-2 text-center">{data.freq}</td>
-                              <td className="py-2 text-center">{data.kw}</td>
-                              <td className="py-2 text-center">{data.kwhr}</td>
-                              <td className="py-2 text-center">{data.pf}</td>
-                              <td className="py-2 text-center">
+                              <td className="py-2 text-center px-2">{data.freq}</td>
+                              <td className="py-2 text-center px-2">{data.kw}</td>
+                              <td className="py-2 text-center px-2">{data.kwhr}</td>
+                              <td className="py-2 text-center px-2">{data.pf}</td>
+                              <td className="py-2 text-center px-2">
                                 {data.voltage}
                               </td>
                             </tr>
@@ -245,10 +246,6 @@ const EnergyDetailReport = () => {
             </div>
           </TabPanel>
           <TabPanel>
-            {/* <div className="sm:w-2/3 sm:mx-auto w-full">
-              <h1>Production vs Time</h1>
-              <Line data={lineGraphData} options={options} />
-            </div> */}
             <KwhrLineChart data={answer} />
           </TabPanel>
         </Tabs>

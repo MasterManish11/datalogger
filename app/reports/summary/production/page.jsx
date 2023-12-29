@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import jsPDF from "jspdf";
@@ -14,7 +14,7 @@ const ProductionSummaryReport = () => {
   const state = {
     options: [
       { name: "1", id: 1 },
-      { name: "2", id: 2 },
+      { name: "2", id: 2 }, px-2
       //   { name: "3", id: 3 },
       //   { name: "4", id: 4 },
       //   { name: "5", id: 5 },
@@ -84,7 +84,6 @@ const ProductionSummaryReport = () => {
 
       // Parse the JSON response
       const responseData = await response.json();
-      // console.log("responseData",responseData)
       // Update state with the response data
       setAnswer(responseData);
     } catch (error) {
@@ -227,22 +226,22 @@ const ProductionSummaryReport = () => {
                 <thead className="thead">
                   <tr>
                     <th>No</th>
-                    <th scope="col" className="py-2 text-center">
+                    <th scope="col" className="py-2 text-center px-2">
                       Date
                     </th>
-                    <th scope="col" className="py-2 text-center">
+                    <th scope="col" className="py-2 text-center px-2">
                       Machine
                     </th>
-                    <th scope="col" className="py-2 text-center">
+                    <th scope="col" className="py-2 text-center px-2">
                       Runtime
                     </th>
-                    <th scope="col" className="py-2 text-center">
+                    <th scope="col" className="py-2 text-center px-2">
                       Stoptime
                     </th>
-                    <th scope="col" className="py-2 text-center">
+                    <th scope="col" className="py-2 text-center px-2">
                       Efficiency
                     </th>
-                    <th scope="col" className="py-2 text-center">
+                    <th scope="col" className="py-2 text-center px-2">
                       Production
                     </th>
                   </tr>
@@ -261,20 +260,20 @@ const ProductionSummaryReport = () => {
                           <React.Fragment key={i}>
                             <tr className="tableRow">
                               <th>{i == 0 ? 1 : i + 1}</th>
-                              <td className="py-2 text-center">{data.date}</td>
-                              <td className="py-2 text-center">
+                              <td className="py-2 text-center px-2">{data.date}</td>
+                              <td className="py-2 text-center px-2">
                                 {data.machine}
                               </td>
-                              <td className="py-2 text-center">
+                              <td className="py-2 text-center px-2">
                                 {`${data.runTime.hours}H ${data.runTime.minutes}M`}
                               </td>
-                              <td className="py-2 text-center">
+                              <td className="py-2 text-center px-2">
                                 {`${data.stopTime.hours}H ${data.stopTime.minutes}M`}
                               </td>
-                              <td className="py-2 text-center">
+                              <td className="py-2 text-center px-2">
                                 {data.efficiency}
                               </td>
-                              <td className="py-2 text-center">
+                              <td className="py-2 text-center px-2">
                                 {data.production}
                               </td>
                             </tr>

@@ -80,7 +80,7 @@ const ProductionDetailReport = () => {
         <h1 className="report-title">Production Detail Report</h1>
       </div>
       <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
-        <div>
+        <div className="flex flex-col">
           <label
             htmlFor="date"
             className="sm:font-semibold font-medium sm:text-base text-sm"
@@ -97,7 +97,7 @@ const ProductionDetailReport = () => {
             value={data.date}
           />
         </div>
-        <div>
+        <div className="flex flex-col">
           <label
             htmlFor="energymeter"
             className="sm:font-semibold font-medium sm:text-base text-sm"
@@ -112,13 +112,13 @@ const ProductionDetailReport = () => {
             onChange={inputEvent}
             value={data.energymeter}
           >
-            <option selected>Select Machine</option>
+            <option defaultValue>Select Machine</option>
             <option>1</option>
             <option>2</option>
           </select>
         </div>
 
-        <div>
+        <div className="flex flex-col">
           <label
             htmlFor="shift"
             className="sm:font-semibold font-medium sm:text-base text-sm"
@@ -133,10 +133,11 @@ const ProductionDetailReport = () => {
             onChange={inputEvent}
             value={data.shift}
           >
-            <option selected>Select Shift</option>
+            <option defaultValue>Select Shift</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
+            <option>ALL</option>
           </select>
         </div>
         <div>
@@ -180,22 +181,22 @@ const ProductionDetailReport = () => {
                 <thead className="thead">
                   <tr className="">
                     <th>No</th>
-                    <th scope="col" className="text-center py-3">
+                    <th scope="col" className="text-center py-3 px-2">
                       Date
                     </th>
-                    <th scope="col" className="text-center py-3">
+                    <th scope="col" className="text-center py-3 px-2">
                       Time
                     </th>
-                    <th scope="col" className="text-center py-3">
+                    <th scope="col" className="text-center py-3 px-2">
                       Cavity
                     </th>
-                    <th scope="col" className="text-center py-3">
+                    <th scope="col" className="text-center py-3 px-2">
                       M/C Status
                     </th>
-                    <th scope="col" className="text-center py-3">
+                    <th scope="col" className="text-center py-3 px-2">
                       Strokes
                     </th>
-                    <th scope="col" className="text-center py-3">
+                    <th scope="col" className="text-center py-3 px-2">
                       Production
                     </th>
                   </tr>
@@ -217,18 +218,18 @@ const ProductionDetailReport = () => {
                               className="tableRow"
                             >
                               <th>{i == 0 ? 1 : i + 1}</th>
-                              <td className="text-center py-2">{data.DATE}</td>
-                              <td className="text-center py-2">{data.TIME}</td>
-                              <td className="text-center py-2">
+                              <td className="text-center py-2 px-2">{data.DATE}</td>
+                              <td className="text-center py-2 px-2">{data.TIME}</td>
+                              <td className="text-center py-2 px-2">
                                 {data.cavity}
                               </td>
-                              <td className="text-center py-2">
+                              <td className="text-center py-2 px-2">
                                 {data.mc_status}
                               </td>
-                              <td className="text-center py-2">
+                              <td className="text-center py-2 px-2">
                                 {data.strokes}
                               </td>
-                              <td className="text-center py-2">
+                              <td className="text-center py-2 px-2">
                                 {data.production}
                               </td>
                             </tr>

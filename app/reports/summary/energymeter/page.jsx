@@ -84,9 +84,7 @@ const EnergySummaryReport = () => {
 
       // Parse the JSON response
       const responseData = await response.json();
-      // console.log("responseData",responseData)
       setAnswer(responseData);
-      console.log('responseData',responseData)
     } catch (error) {
       // Handle errors, e.g., log them or show an error message to the user
       console.error("Error in showResult:", error);
@@ -228,13 +226,13 @@ const EnergySummaryReport = () => {
             <thead className="thead">
               <tr>
                 <th>No</th>
-                <th scope="col" className="py-2 text-center">
+                <th scope="col" className="py-2 text-center px-2">
                   Date
                 </th>
-                <th scope="col" className="py-2 text-center">
+                <th scope="col" className="py-2 text-center px-2">
                   Energymeter
                 </th>
-                <th scope="col" className="py-2 text-center">
+                <th scope="col" className="py-2 text-center px-2">
                   Kwhr
                 </th>
               </tr>
@@ -253,11 +251,11 @@ const EnergySummaryReport = () => {
                       <React.Fragment key={i}>
                         <tr className="tableRow">
                           <th>{i == 0 ? 1 : i + 1}</th>
-                          <td className="py-2 text-center">{data.date}</td>
-                          <td className="py-2 text-center">
+                          <td className="py-2 text-center px-2">{data.date}</td>
+                          <td className="py-2 text-center px-2">
                             {data.energymeter}
                           </td>
-                          <td className="py-2 text-center">
+                          <td className="py-2 text-center px-2">
                             {data.kwhr.toFixed(2)}
                           </td>
                         </tr>
@@ -273,10 +271,6 @@ const EnergySummaryReport = () => {
             {answer.length > 0 && <KwhrBarChart data={answer} />}
           </TabPanel>
         </Tabs>
-
-
-
-       
       </div>
     </div>
   );
