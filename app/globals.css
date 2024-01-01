@@ -16,17 +16,13 @@
   }
 }
 
-body {
-  /* color: rgb(var(--foreground-rgb)); */
-  /* overflow-y: hidden; */
-}
 
 body{
-  @apply bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 min-h-screen
+  @apply bg-gradient-to-r from-[#181F52] via-[#1C4671] to-[#205C84] min-h-screen
 }
 
 .content-container {
-  @apply xl:max-w-7xl lg:max-w-5xl px-3 py-3 rounded mx-auto bg-gradient-to-r from-indigo-200 from-0% via-sky-200 via-30% to-emerald-200 to-90%;
+  @apply xl:max-w-7xl lg:max-w-5xl px-3 py-3 mt-2 rounded mx-auto bg-[#1D335A];
 }
 
 h1{
@@ -36,7 +32,7 @@ h1{
   @apply text-black
 }
 .container{
-  @apply max-w-7xl p-6 mx-auto
+  @apply max-w-7xl px-2 mx-auto min-h-screen overflow-y-hidden
 }
 .realtimelabelwarpper{
   @apply font-medium text-center bg-slate-800 text-white
@@ -45,17 +41,23 @@ h1{
   @apply font-semibold text-center bg-slate-800
 }
 .report-title{
-  @apply text-center bg-gradient-to-r from-indigo-400 from-10% via-sky-300 via-30% to-emerald-300 to-90% rounded-md
+  @apply text-center text-white rounded-md
 }
 .tableContainer{
   @apply w-full min-w-full border-collapse text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400
 }
 .thead{
-  @apply sticky top-0 z-10 text-xs text-gray-50 uppercase bg-blue-600 dark:bg-gray-700 dark:text-gray-400
+  @apply sticky top-0 z-10 text-xs text-gray-50 bg-[#1C4671] uppercase dark:bg-gray-700 dark:text-gray-400
 }
 .tableParent{
-  @apply relative overflow-x-auto shadow-md sm:rounded-lg lg:h-96 h-[484px] overflow-y-auto
+  @apply relative overflow-x-auto shadow-md sm:rounded-lg lg:h-72 h-[484px] overflow-y-auto
 }
 .tableRow{
   @apply odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700
+}
+.custom-tab {
+@apply text-white
+}
+nav{
+  @apply h-16
 }

@@ -1,13 +1,15 @@
 "use client";
-import React, {useState } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import React, { useState } from "react";
+// import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Multiselect from "multiselect-react-dropdown";
+// import Multiselect from "multiselect-react-dropdown";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import KwhrBarChart from "@/app/components/KwhrBarChart";
 import Loader from "@/app/components/Loader";
+import { Tabs } from "flowbite-react";
+
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const EnergySummaryReport = () => {
@@ -108,8 +110,8 @@ const EnergySummaryReport = () => {
         <h1 className="report-title">EnergyMeter Summary Report</h1>
       </div>
       <div className="grid lg:grid-cols-7 lg:gap-4 py-2 sm:grid-cols-4 sm:gap-4 grid-cols-2 gap-4">
-        <div className='flex flex-col'>
-          <label htmlFor="fdate" className="font-semibold">
+        <div className="flex flex-col">
+          <label htmlFor="fdate" className="font-semibold text-white">
             From date
           </label>
 
@@ -122,8 +124,8 @@ const EnergySummaryReport = () => {
             value={data.fdate}
           />
         </div>
-        <div className='flex flex-col'>
-          <label htmlFor="tdate" className="font-semibold">
+        <div className="flex flex-col">
+          <label htmlFor="tdate" className="font-semibold text-white">
             To date
           </label>
 
@@ -136,8 +138,8 @@ const EnergySummaryReport = () => {
             value={data.tdate}
           />
         </div>
-        <div className='flex flex-col'>
-          <label htmlFor="selectEM" className="font-semibold">
+        <div className="flex flex-col">
+          <label htmlFor="selectEM" className="font-semibold text-white">
             Select Meter
           </label>
           <select
@@ -147,7 +149,7 @@ const EnergySummaryReport = () => {
             onChange={inputEvent}
             value={data.energymeter}
           >
-            <option selected>Select Meter</option>
+            <option defaultValue>Select Meter</option>
             <option>1</option>
             <option>2</option>
           </select>
@@ -162,8 +164,8 @@ const EnergySummaryReport = () => {
           /> */}
         </div>
 
-        <div className='flex flex-col'>
-          <label htmlFor="shift" className="font-semibold">
+        <div className="flex flex-col">
+          <label htmlFor="shift" className="font-semibold text-white">
             Select Shift
           </label>
 
@@ -174,7 +176,7 @@ const EnergySummaryReport = () => {
             onChange={inputEvent}
             value={data.shift}
           >
-            <option selected>Select Shift</option>
+            <option defaultValue>Select Shift</option>
             <option>1</option>
             <option>2</option>
             <option>3</option>
@@ -182,7 +184,7 @@ const EnergySummaryReport = () => {
         </div>
         <div>
           <button
-            className="w-full lg:mt-6 p-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={showResult}
           >
             View
@@ -190,7 +192,7 @@ const EnergySummaryReport = () => {
         </div>
         <div>
           <button
-            className="w-full lg:mt-6 p-2 bg-green-400 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={saveAsCSV}
           >
             Save as csv
@@ -198,7 +200,7 @@ const EnergySummaryReport = () => {
         </div>
         <div>
           <button
-            className="w-full lg:mt-6 p-2 bg-purple-400 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={saveData}
           >
             Save AS PDF
@@ -206,66 +208,59 @@ const EnergySummaryReport = () => {
         </div>
       </div>
       <div>
-
-      <Tabs>
-          <TabList>
-            <Tab>Table View</Tab>
-            <Tab>Graphical view</Tab>
-          </TabList>
-
-          <TabPanel>
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:min-h-[200px] min-h-[484px] overflow-y-auto">
-          <table
-            className="tableContainer"
-            id="table"
-          >
-            <thead className="thead">
-              <tr>
-                <th>No</th>
-                <th scope="col" className="py-2 text-center px-2">
-                  Date
-                </th>
-                <th scope="col" className="py-2 text-center px-2">
-                  Energymeter
-                </th>
-                <th scope="col" className="py-2 text-center px-2">
-                  Kwhr
-                </th>
-              </tr>
-            </thead>
-            <tbody className="h-48 overflow-y-auto">
-              {loading ? (
-                <tr>
-                <td colSpan="9" className="py-2 text-center">
-                  <Loader />
-                </td>
-              </tr>
-              ) : (
-                <>
-                  {answer &&
-                    answer.map((data, i) => (
-                      <React.Fragment key={i}>
-                        <tr className="tableRow">
-                          <th>{i == 0 ? 1 : i + 1}</th>
-                          <td className="py-2 text-center px-2">{data.date}</td>
-                          <td className="py-2 text-center px-2">
-                            {data.energymeter}
-                          </td>
-                          <td className="py-2 text-center px-2">
-                            {data.kwhr.toFixed(2)}
-                          </td>
-                        </tr>
-                      </React.Fragment>
-                    ))}
-                </>
-              )}
-            </tbody>
-          </table>
-        </div>
-          </TabPanel>
-          <TabPanel>
+        <Tabs aria-label="Pills" style="pills">
+          <Tabs.Item active title="Table view">
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:min-h-[200px] min-h-[484px] overflow-y-auto">
+              <table className="tableContainer" id="table">
+                <thead className="thead">
+                  <tr>
+                    <th>No</th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Date
+                    </th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Energymeter
+                    </th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Kwhr
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="h-48 overflow-y-auto">
+                  {loading ? (
+                    <tr>
+                      <td colSpan="9" className="py-2 text-center">
+                        <Loader />
+                      </td>
+                    </tr>
+                  ) : (
+                    <>
+                      {answer &&
+                        answer.map((data, i) => (
+                          <React.Fragment key={i}>
+                            <tr className="tableRow">
+                              <th>{i == 0 ? 1 : i + 1}</th>
+                              <td className="py-2 text-center px-2">
+                                {data.date}
+                              </td>
+                              <td className="py-2 text-center px-2">
+                                {data.energymeter}
+                              </td>
+                              <td className="py-2 text-center px-2">
+                                {data.kwhr.toFixed(2)}
+                              </td>
+                            </tr>
+                          </React.Fragment>
+                        ))}
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </Tabs.Item>
+          <Tabs.Item title="Graphical View" className="custom-tab">
             {answer.length > 0 && <KwhrBarChart data={answer} />}
-          </TabPanel>
+          </Tabs.Item>
         </Tabs>
       </div>
     </div>

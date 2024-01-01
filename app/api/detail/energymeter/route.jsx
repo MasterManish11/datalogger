@@ -1,11 +1,26 @@
-
 import { NextResponse } from "next/server";
 import { query } from "@/app/lib/database";
 
 export const revalidate = true;
 
+async function checkInternetConnectivity() {
+  try {
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/todos/1"
+    );
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
+}
 export async function POST(req) {
   try {
+
+    const isOnline = await checkInternetConnectivity();
+
+    if (!isOnline) {
+      return NextResponse.json({ message: "Internet is not working" });
+    }
     const data = await req.json();
     const { energymeter: em, date, shift } = data.data;
     const formattedDate = date.split("-").reverse().join("-");
@@ -22,6 +37,10 @@ export async function POST(req) {
       query: sql,
       values: [],
     });
+
+    if (users.length === 0) {
+      return NextResponse.json({ message: "No data available" });
+    }
 
     return NextResponse.json(users);
   } catch (error) {

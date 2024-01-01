@@ -4,9 +4,9 @@ const MachineData = ({ data }) => {
   return (
     <div>
       <div className="bg-gray-200 h-[372px] flex flex-col space-y-1 border-4 border-white rounded ">
-        <h5 className="font-semibold text-center bg-gradient-to-r from-indigo-300 from-10% via-sky-300 via-30% to-emerald-300 to-90% text-black rounded-t">
+        <h5 className="font-semibold text-center text-white bg-[#0891B2] rounded-t">
           Machine Number :{" "}
-          <span className=" text-lg text-red-600"> {data.Machine_no} </span>
+          <span className=" text-lg text-white"> {data.Machine_no} </span>
         </h5>
         {/* <h5 className="font-semibold text-center bg-slate-800 text-white">
           Machine Name

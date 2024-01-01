@@ -1,13 +1,14 @@
 "use client";
 import React, {useState } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+// import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Multiselect from "multiselect-react-dropdown";
+// import Multiselect from "multiselect-react-dropdown";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import Loader from "@/app/components/Loader";
 import ProductionBarchart from "@/app/components/ProductionBarchart";
+import { Tabs } from "flowbite-react";
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const ProductionSummaryReport = () => {
@@ -47,12 +48,12 @@ const ProductionSummaryReport = () => {
     });
   };
 
-  const onSelect = (selectedList) => {
-    setIsSelected(selectedList.map((list) => list.name));
-  };
-  const onRemove = (selectedList) => {
-    setIsSelected(selectedList.map((list) => list.name));
-  };
+  // const onSelect = (selectedList) => {
+  //   setIsSelected(selectedList.map((list) => list.name));
+  // };
+  // const onRemove = (selectedList) => {
+  //   setIsSelected(selectedList.map((list) => list.name));
+  // };
 
   const showResult = async (event) => {
     try {
@@ -110,7 +111,7 @@ const ProductionSummaryReport = () => {
       </div>
       <div className="grid lg:grid-cols-7 lg:gap-4 py-2 sm:grid-cols-4 sm:gap-4 grid-cols-2 gap-4"  >
         <div className="flex flex-col">
-          <label htmlFor="fdate" className="font-semibold">
+          <label htmlFor="fdate" className="font-semibold text-white">
             From date
           </label>
 
@@ -124,8 +125,7 @@ const ProductionSummaryReport = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="tdate" className="font-semibold">
-            {" "}
+          <label htmlFor="tdate" className="font-semibold text-white">
             To date
           </label>
 
@@ -139,8 +139,7 @@ const ProductionSummaryReport = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="selectEM" className="font-semibold">
-            {" "}
+          <label htmlFor="selectEM" className="font-semibold text-white">
             Select Machine
           </label>
           <select
@@ -166,7 +165,7 @@ const ProductionSummaryReport = () => {
         </div>
 
         <div>
-          <label htmlFor="shift" className="font-semibold flex flex-col">
+          <label htmlFor="shift" className="font-semibold flex flex-col text-white">
             Select Shift
           </label>
 
@@ -185,7 +184,7 @@ const ProductionSummaryReport = () => {
         </div>
         <div>
           <button
-            className="w-full lg:mt-6 p-2 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={showResult}
           >
             View
@@ -193,7 +192,7 @@ const ProductionSummaryReport = () => {
         </div>
         <div>
           <button
-            className="w-full lg:mt-6 p-2 bg-green-400 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={saveAsCSV}
           >
             Save as csv
@@ -201,7 +200,7 @@ const ProductionSummaryReport = () => {
         </div>
         <div>
           <button
-            className="w-full lg:mt-6 p-2 bg-purple-400 rounded font-semibold text-black"
+            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={saveData}
           >
             Save AS PDF
@@ -209,7 +208,7 @@ const ProductionSummaryReport = () => {
         </div>
       </div>
       <div>
-        <Tabs>
+        {/* <Tabs>
           <TabList>
             <Tab>Table View</Tab>
             <Tab>Graphical view</Tab>
@@ -223,7 +222,7 @@ const ProductionSummaryReport = () => {
               >
                 <thead className="thead">
                   <tr>
-                    <th>No</th>
+                    <th className="pl-2">No</th>
                     <th scope="col" className="py-2 text-center px-2">
                       Date
                     </th>
@@ -257,7 +256,7 @@ const ProductionSummaryReport = () => {
                         answer.map((data, i) => (
                           <React.Fragment key={i}>
                             <tr className="tableRow">
-                              <th>{i == 0 ? 1 : i + 1}</th>
+                              <th className="pl-2">{i == 0 ? 1 : i + 1}</th>
                               <td className="py-2 text-center px-2">{data.date}</td>
                               <td className="py-2 text-center px-2">
                                 {data.machine}
@@ -286,7 +285,85 @@ const ProductionSummaryReport = () => {
           <TabPanel>
             {answer.length > 0 && <ProductionBarchart data={answer} />}
           </TabPanel>
+        </Tabs> */}
+
+        <Tabs aria-label="Pills" style="pills">
+          <Tabs.Item active title="Table view">
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg lg:min-h-[200px] min-h-[484px] overflow-y-auto">
+              <table
+                className="tableContainer"
+                id="table"
+              >
+                <thead className="thead">
+                  <tr>
+                    <th className="pl-2">No</th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Date
+                    </th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Machine
+                    </th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Runtime
+                    </th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Stoptime
+                    </th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Efficiency
+                    </th>
+                    <th scope="col" className="py-2 text-center px-2">
+                      Production
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="h-48 overflow-y-auto">
+                  {loading ? (
+                    <tr>
+                    <td colSpan="9" className="py-2 text-center">
+                      <Loader />
+                    </td>
+                  </tr>
+                  ) : (
+                    <>
+                      {answer &&
+                        answer.map((data, i) => (
+                          <React.Fragment key={i}>
+                            <tr className="tableRow">
+                              <th className="pl-2">{i == 0 ? 1 : i + 1}</th>
+                              <td className="py-2 text-center px-2">{data.date}</td>
+                              <td className="py-2 text-center px-2">
+                                {data.machine}
+                              </td>
+                              <td className="py-2 text-center px-2">
+                                {`${data.runTime.hours}H ${data.runTime.minutes}M`}
+                              </td>
+                              <td className="py-2 text-center px-2">
+                                {`${data.stopTime.hours}H ${data.stopTime.minutes}M`}
+                              </td>
+                              <td className="py-2 text-center px-2">
+                                {data.efficiency}
+                              </td>
+                              <td className="py-2 text-center px-2">
+                                {data.production}
+                              </td>
+                            </tr>
+                          </React.Fragment>
+                        ))}
+                    </>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </Tabs.Item>
+          <Tabs.Item title="Graphical View" className="custom-tab">
+          {answer.length > 0 && <ProductionBarchart data={answer} />}
+          </Tabs.Item>
         </Tabs>
+
+
+
+
       </div>
     </div>
   );

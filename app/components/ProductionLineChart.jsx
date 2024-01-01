@@ -53,6 +53,10 @@ const ProductionLineChart = ({ data }) => {
         title: {
           display: true,
           text: "Time", // X-axis label
+          color:"white"
+        },
+        ticks: {
+          color: 'white', // Change the color of x-axis ticks
         },
       },
       y: {
@@ -60,6 +64,10 @@ const ProductionLineChart = ({ data }) => {
         title: {
           display: true,
           text: "Production", // Y-axis label
+          color:"white"
+        },
+        ticks: {
+          color: 'white', // Change the color of x-axis ticks
         },
       },
     },
@@ -82,7 +90,7 @@ const ProductionLineChart = ({ data }) => {
 
   return (
     <div className="sm:w-2/3 sm:mx-auto w-full">
-      <h1>Production vs Time</h1>
+      <h1 className="text-white">Production vs Time</h1>
       <Line data={lineGraphData} options={options} />
     </div>
   );

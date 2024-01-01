@@ -16,8 +16,9 @@ const KwhrBarChart = ({data}) => {
             label: "Date vs Kwhr",
             data: dataWithoutLast,
             backgroundColor: dataWithoutLast.map((value) =>
-              value > 100 ? "green" : "red"
+              value > 100 ? "#67E8F9" : "#3D9394"
             ),
+            // color:"white"
           },
         ],
       });
@@ -30,12 +31,21 @@ const KwhrBarChart = ({data}) => {
         title: {
           display: true,
           text: "Date", // X-axis label
+          color:"white"
         },
+        ticks: {
+          color: 'white', // Change the color of x-axis ticks
+        },
+        
       },
       y: {
         title: {
           display: true,
           text: "Kwhr", // Y-axis label
+          color:"white"
+        },
+        ticks: {
+          color: 'white', // Change the color of x-axis ticks
         },
       },
     },

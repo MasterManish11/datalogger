@@ -17,7 +17,7 @@ const ProductionBarchart = ({ data }) => {
             label: "Date vs Production",
             data: dataWithoutLast,
             backgroundColor: dataWithoutLast.map((value) =>
-              value > 1000 ? "green" : "red"
+              value > 1000 ? "#67E8F9" : "#3D9394"
             ),
           },
         ],
@@ -38,16 +38,43 @@ const ProductionBarchart = ({ data }) => {
     }
   }, [data]);
 
+  const options = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date", // X-axis label
+          color:"white"
+        },
+        ticks: {
+          color: 'white', // Change the color of x-axis ticks
+        },
+        
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Production", // Y-axis label
+          color:"white"
+        },
+        ticks: {
+          color: 'white', // Change the color of x-axis ticks
+        },
+      },
+    },
+  };
+
+
   return (
     <div>
       {graphdata.labels?.length > 0 ? (
         <div className="w-full grid sm:grid-cols-3 sm:gap-4 grid-cols-1">
           <div className="sm:col-span-2 ">
-            <Bar data={graphdata} />
+            <Bar data={graphdata} options={options} />
           </div>
           <div className="flex flex-col items-center">
             <div className="sm:w-full w-1/2">
-              <h2 className="text-center font-semibold ">Machine Efficiency</h2>
+              <h2 className="text-center font-semibold text-white">Machine Efficiency</h2>
               <Pie data={effChartData} className="sm:w-1/2 w-1/4" />
             </div>
           </div>

@@ -2,17 +2,19 @@
 import React, { useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+// import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import Loader from "@/app/components/Loader";
 import ProductionLineChart from "@/app/components/ProductionLineChart";
+import { Tabs } from "flowbite-react";
 
 const csvConfig = mkConfig({ useKeysAsHeaders: true });
 
 const ProductionDetailReport = () => {
   const [answer, setAnswer] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [data, setData] = useState({
     date: "",
     energymeter: "",
@@ -48,18 +50,25 @@ const ProductionDetailReport = () => {
       // Make the API request
       const response = await fetch(apiUrl, requestOptions);
 
-      // Check if the request was successful (status code 2xx)
       if (!response.ok) {
         throw new Error(`Request failed with status: ${response.status}`);
       }
 
       // Parse the JSON response
       const responseData = await response.json();
-      setAnswer(responseData);
+
+      if (responseData.message) {
+        setErrorMessage(responseData.message);
+        setAnswer([]);
+      } else {
+        setAnswer(responseData);
+        setErrorMessage(null);
+      }
+
       setLoading(false);
     } catch (error) {
       // Handle errors, e.g., log them or show an error message to the user
-      console.error("Error in showResult:", error);
+      console.log("Error in showResult:", error);
     }
   };
 
@@ -83,9 +92,8 @@ const ProductionDetailReport = () => {
         <div className="flex flex-col">
           <label
             htmlFor="date"
-            className="sm:font-semibold font-medium sm:text-base text-sm"
+            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
           >
-            {" "}
             Select date
           </label>
           <input
@@ -100,9 +108,8 @@ const ProductionDetailReport = () => {
         <div className="flex flex-col">
           <label
             htmlFor="energymeter"
-            className="sm:font-semibold font-medium sm:text-base text-sm"
+            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
           >
-            {" "}
             Select Machine
           </label>
           <select
@@ -121,9 +128,8 @@ const ProductionDetailReport = () => {
         <div className="flex flex-col">
           <label
             htmlFor="shift"
-            className="sm:font-semibold font-medium sm:text-base text-sm"
+            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
           >
-            {" "}
             Select Shift
           </label>
           <select
@@ -142,7 +148,7 @@ const ProductionDetailReport = () => {
         </div>
         <div>
           <button
-            className="w-full p-2 lg:mt-6 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded font-semibold text-black"
+            className="w-full p-2 lg:mt-6 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={showResult}
           >
             View
@@ -150,7 +156,7 @@ const ProductionDetailReport = () => {
         </div>
         <div>
           <button
-            className="w-full p-2 lg:mt-6 bg-green-400 rounded font-semibold text-black"
+            className="w-full p-2 lg:mt-6 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={saveAsCSV}
           >
             Save AS CSV
@@ -158,7 +164,7 @@ const ProductionDetailReport = () => {
         </div>
         <div>
           <button
-            className="w-full p-2 lg:mt-6 bg-purple-400 rounded font-semibold text-black"
+            className="w-full p-2 lg:mt-6 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
             onClick={saveData}
           >
             Save AS PDF
@@ -166,21 +172,13 @@ const ProductionDetailReport = () => {
         </div>
       </div>
       <div>
-        <Tabs>
-          <TabList>
-            <Tab>Table View</Tab>
-            <Tab>Graphical view</Tab>
-          </TabList>
-
-          <TabPanel>
+        <Tabs aria-label="Pills" style="pills">
+          <Tabs.Item active title="Table view">
             <div className="tableParent">
-              <table
-                className="tableContainer"
-                id="table"
-              >
+              <table className="tableContainer" id="table">
                 <thead className="thead">
-                  <tr className="">
-                    <th>No</th>
+                  <tr>
+                    <th className="pl-2">No</th>
                     <th scope="col" className="text-center py-3 px-2">
                       Date
                     </th>
@@ -204,46 +202,63 @@ const ProductionDetailReport = () => {
                 <tbody className="h-48 overflow-y-auto">
                   {loading ? (
                     <tr>
-                    <td colSpan="9" className="py-2 text-center">
-                      <Loader />
-                    </td>
-                  </tr>
+                      <td colSpan="9" className="py-2 text-center">
+                        <Loader />
+                      </td>
+                    </tr>
                   ) : (
                     <>
-                      {answer &&
-                        answer.map((data, i) => (
-                          <>
-                            <tr
-                              key={i}
-                              className="tableRow"
-                            >
-                              <th>{i == 0 ? 1 : i + 1}</th>
-                              <td className="text-center py-2 px-2">{data.DATE}</td>
-                              <td className="text-center py-2 px-2">{data.TIME}</td>
-                              <td className="text-center py-2 px-2">
-                                {data.cavity}
-                              </td>
-                              <td className="text-center py-2 px-2">
-                                {data.mc_status}
-                              </td>
-                              <td className="text-center py-2 px-2">
-                                {data.strokes}
-                              </td>
-                              <td className="text-center py-2 px-2">
-                                {data.production}
-                              </td>
-                            </tr>
-                          </>
-                        ))}
+                      {errorMessage ? (
+                        <tr>
+                          <td colSpan="9" className="py-2 text-center">
+                            {errorMessage}
+                          </td>
+                        </tr>
+                      ) : (
+                        <>
+                          {answer &&
+                            answer.map((data, i) => (
+                              <React.Fragment key={i}>
+                                <tr className="tableRow">
+                                  <th className="pl-2">{i == 0 ? 1 : i + 1}</th>
+                                  <td className="text-center py-2 px-2">
+                                    {data.DATE}
+                                  </td>
+                                  <td className="text-center py-2 px-2">
+                                    {data.TIME}
+                                  </td>
+                                  <td className="text-center py-2 px-2">
+                                    {data.cavity}
+                                  </td>
+                                  <td className="text-center py-2 px-2">
+                                    {data.mc_status}
+                                  </td>
+                                  <td className="text-center py-2 px-2">
+                                    {data.strokes}
+                                  </td>
+                                  <td className="text-center py-2 px-2">
+                                    {data.production}
+                                  </td>
+                                </tr>
+                              </React.Fragment>
+                            ))}
+                        </>
+                      )}
                     </>
                   )}
                 </tbody>
               </table>
             </div>
-          </TabPanel>
-          <TabPanel>
-            <ProductionLineChart data={answer} />
-          </TabPanel>
+          </Tabs.Item>
+          <Tabs.Item title="Graphical View" className="custom-tab">
+            {errorMessage ? (
+              <div>
+                <p className="text-center">{errorMessage}</p>
+              </div>
+            ) : (
+              <ProductionLineChart data={answer} />
+            )}
+          </Tabs.Item>
         </Tabs>
       </div>
     </div>

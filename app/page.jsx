@@ -1,13 +1,13 @@
-import Navbar from './components/Navbar'
+import Navbar from "./components/Navbar";
 import DashboardData from "./components/DashboardData";
 const Dashboard = () => {
   return (
-    <>
-    <Navbar />
-    <div className="container">
-     <DashboardData />
+    <div>
+      <Navbar />
+      <div className="container">
+        <DashboardData />
+      </div>
     </div>
-    </>
   );
 };
 

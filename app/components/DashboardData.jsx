@@ -36,14 +36,14 @@ const DashboardData = () => {
     };
   }, []);
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 rounded overflow-hidden p-2 grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3  gap-4 py-2">
+    <div className="min-h-screen rounded overflow-hidden p-2 grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3  gap-4 py-2">
       {loading ? (
         <>
           <Loader />
         </>
       ) : (
         <>
-          {machineData?.map((data, i) => (
+          {machineData?.slice(0, 5).map((data, i) => (
             <MachineData data={data} key={i} />
           ))}
         </>

@@ -71,7 +71,7 @@ useEffect(()=>{
 },[])
 
   return (
-    <header>
+    <header className="bg-[#181745]">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
         aria-label="Global"
@@ -85,10 +85,11 @@ useEffect(()=>{
               width={40}
               height={40}
               alt="DataloggerIcon"
+              className="fill-white"
             />
           </Link>
 
-          <span className="text-black">DataLogger</span>
+          <span className="text-white">DataLogger</span>
         </div>
 
         <div className="flex lg:hidden">
@@ -103,10 +104,10 @@ useEffect(()=>{
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-white">
               Report
               <ChevronDownIcon
-                className="h-5 w-5 flex-none text-gray-800"
+                className="h-5 w-5 flex-none text-white"
                 aria-hidden="true"
               />
             </Popover.Button>
@@ -163,20 +164,20 @@ useEffect(()=>{
 
           <Link
             href="/"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6 text-white"
           >
             Dashboard
           </Link>
           <Link
             href="/about"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6 text-white"
           >
             AboutUs
           </Link>
          
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-3">
-          <span className="text-base font-bold">
+          <span className="text-base font-bold text-white">
             {
               isLoggedIn && currentUser? ` Welcome ${currentUser}`:''
             }
@@ -226,7 +227,7 @@ useEffect(()=>{
                         <ChevronDownIcon
                           className={classNames(
                             open ? "rotate-180" : "",
-                            "h-5 w-5 flex-none"
+                            "h-5 w-5 flex-none text-white"
                           )}
                           aria-hidden="true"
                         />
