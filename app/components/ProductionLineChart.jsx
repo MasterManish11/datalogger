@@ -89,7 +89,7 @@ const ProductionLineChart = ({ data }) => {
   };
 
   return (
-    <div className="sm:w-2/3 sm:mx-auto w-full">
+    <div className="sm:w-[50%] sm:mx-auto w-full">
       <h1 className="text-white">Production vs Time</h1>
       <Line data={lineGraphData} options={options} />
     </div>

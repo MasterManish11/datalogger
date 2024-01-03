@@ -31,7 +31,7 @@ const KwhrLineChart = ({ data }) => {
         labels,
         datasets: [
           {
-            label: "Date vs Production",
+            label: "Date vs Energy",
             data: kwhrData,
             backgroundColor: "rgba(75,192,192,0.2)",
             borderColor: "rgba(75,192,192,1)",
@@ -88,8 +88,8 @@ const KwhrLineChart = ({ data }) => {
   };
 
   return (
-    <div className="sm:w-2/3 sm:mx-auto w-full">
-      <h1 className="text-white">Production vs Time</h1>
+    <div className="sm:w-[50%] sm:mx-auto w-full">
+      <h1 className="text-white">Time vs Energy</h1>
       <Line data={lineGraphData} options={options} />
     </div>
   );

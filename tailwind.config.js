@@ -4,7 +4,6 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    'node_modules/flowbite-react/lib/esm/**/*.js',
   ],
   theme: {
     extend: {
@@ -15,7 +14,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui"),require('flowbite/plugin')],
+  plugins: [require("daisyui")],
   daisyui: {
     themes: ["winter"],
   },

@@ -54,7 +54,7 @@ const KwhrBarChart = ({data}) => {
   return (
     <div>
       {graphdata.labels?.length > 0 ? (
-        <div className="sm:w-2/3 sm:mx-auto w-full">
+        <div className="sm:w-[50%] sm:mx-auto w-full">
           <Bar data={graphdata} options={options} />
         </div>
       ) : (

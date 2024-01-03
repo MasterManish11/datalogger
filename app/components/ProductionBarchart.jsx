@@ -69,11 +69,12 @@ const ProductionBarchart = ({ data }) => {
     <div>
       {graphdata.labels?.length > 0 ? (
         <div className="w-full grid sm:grid-cols-3 sm:gap-4 grid-cols-1">
-          <div className="sm:col-span-2 ">
+          <div className="sm:col-span-2 sm:w-[80%]">
+          <h2 className="text-center font-semibold text-white">Date vs Production</h2>
             <Bar data={graphdata} options={options} />
           </div>
           <div className="flex flex-col items-center">
-            <div className="sm:w-full w-1/2">
+            <div className="sm:w-3/4 w-1/4">
               <h2 className="text-center font-semibold text-white">Machine Efficiency</h2>
               <Pie data={effChartData} className="sm:w-1/2 w-1/4" />
             </div>

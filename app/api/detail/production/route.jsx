@@ -22,7 +22,7 @@ export async function POST(req) {
     }
     const data = await req.json();
     const { energymeter: em, date, shift } = data.data;
-    const formattedDate = date.split("-").reverse().join("-");
+    const formattedDate = date.split("-").reverse().join("/");
 
     let sql = `SELECT * FROM u967600739_datalogger.rishabhprd${
       em > 9 ? em : `0${em}`
