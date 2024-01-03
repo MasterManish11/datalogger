@@ -43,7 +43,6 @@ export async function POST(req) {
     if (shift !== "ALL") {
       sql += ` WHERE DATE = '${formattedDate}' AND shift = ${shift}`;
     // } else if(shift == 3){
-    //     console.log("loop")
     //   sql+= `WHERE STR_TO_DATE(CONCAT(DATE, ' ', TIME), '%d-%m-%Y %H:%i:%s') 
     //   BETWEEN '${shiftDate} 07:00:00' AND '${newFormattedDate} 07:00:00'`
 
