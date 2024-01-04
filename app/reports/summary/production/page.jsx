@@ -179,7 +179,7 @@ const ProductionSummaryReport = () => {
             <option defaultValue>Select Shift</option>
             <option>1</option>
             <option>2</option>
-            {/* <option>3</option> */}
+            <option>ALL</option>
           </select>
         </div>
         <div>

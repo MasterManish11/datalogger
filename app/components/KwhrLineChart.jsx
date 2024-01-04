@@ -88,7 +88,7 @@ const KwhrLineChart = ({ data }) => {
   };
 
   return (
-    <div className="sm:w-[50%] sm:mx-auto w-full">
+    <div className="md:w-[50%] md:mx-auto w-full">
       <h1 className="text-white">Time vs Energy</h1>
       <Line data={lineGraphData} options={options} />
     </div>

@@ -14,6 +14,19 @@ async function checkInternetConnectivity() {
   }
 }
 
+async function queryPromise1(date, em, shift) {
+  const sql = `SELECT MAX(kwhr) - MIN(kwhr) as kwhr FROM u967600739_datalogger.rishabhem${
+    em > 9 ? em : `0${em}`
+  } WHERE DATE= '${date}'${shift !== "ALL" ? ` and shift=${shift}` : ""} and kwhr!=0`;
+
+  const elements = await query({
+    query: sql,
+    values: [],
+  });
+
+  return elements;
+}
+
 export async function POST(req) {
   try {
     const isOnline = await checkInternetConnectivity();
@@ -45,27 +58,13 @@ export async function POST(req) {
       );
     };
 
-    const queryPromise1 = (date, em, shift) => {
-      return new Promise(async (resolve, reject) => {
-        const sql = `SELECT MAX(kwhr) - MIN(kwhr) as kwhr FROM u967600739_datalogger.rishabhem${
-          em > 9 ? em : `0${em}`
-        } WHERE DATE= '${date}' and shift=${shift} and kwhr!=0`;
-        const elements = await query({
-          query: sql,
-          values: [],
-        });
-        resolve(elements);
-      });
-    };
-
     const result = findDatesBetween(fdate, tdate);
 
     if (result.length > 0) {
       for (let i = 1; i <= result.length; i++) {
-        const promise1 = await queryPromise1(result[i - 1], em, shift);
-
         try {
-          const answer = await promise1;
+          const answer = await queryPromise1(result[i - 1], em, shift);
+
           output.push({
             date: result[i - 1],
             energymeter: em,
@@ -73,12 +72,14 @@ export async function POST(req) {
           });
 
           if (i === result.length) {
+            const totalKwhr = output
+              .map((b) => b.kwhr)
+              .reduce((acc, current) => acc + current, 0);
+
             output.push({
               date: "Total",
               energymeter: "-",
-              kwhr: output
-                .map((b) => b.kwhr)
-                .reduce((acc, current) => acc + current, 0),
+              kwhr: totalKwhr,
             });
 
             if (output.length === 0) {
@@ -87,7 +88,7 @@ export async function POST(req) {
             return NextResponse.json(output);
           }
         } catch (error) {
-          return NextResponse.json({ error: "error" });
+          return NextResponse.json({ error: "An error occurred" });
         }
       }
     }

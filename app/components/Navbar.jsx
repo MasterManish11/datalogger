@@ -2,8 +2,9 @@
 import Image from "next/image";
 import useAuth from "../useAuth";
 import { getCookie } from "cookies-next";
-import datalogger from "../../public/datalogger.svg";
-import { Fragment, useEffect, useLayoutEffect, useState } from "react";
+import RSLogo from "../../public/RSLogo.png";
+import RSLogoMobile from "../../public/RSLogoMobile.png";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
 import {
   ArrowPathIcon,
@@ -63,12 +64,11 @@ export default function Navbar() {
   const [currentUser, setCurrentUser] = useState("");
   const { isLoggedIn } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
 
-useEffect(()=>{
-      const loggedUser = getCookie("user")
-      setCurrentUser(loggedUser)
-},[])
+  useEffect(() => {
+    const loggedUser = getCookie("user");
+    setCurrentUser(loggedUser);
+  }, []);
 
   return (
     <header className="bg-[#181745]">
@@ -81,17 +81,14 @@ useEffect(()=>{
             <span className="sr-only">Your Company</span>
             <Image
               priority
-              src={datalogger}
-              width={40}
-              height={40}
+              src={RSLogo}
+              width={180}
+              height={180}
               alt="DataloggerIcon"
               className="fill-white"
             />
           </Link>
-
-          <span className="text-white">DataLogger</span>
         </div>
-
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -99,7 +96,7 @@ useEffect(()=>{
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <Bars3Icon className="h-6 w-6 text-white" aria-hidden="true"  />
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
@@ -162,25 +159,20 @@ useEffect(()=>{
             </Transition>
           </Popover>
 
-          <Link
-            href="/"
-            className="text-sm font-semibold leading-6 text-white"
-          >
+          <Link href="/" className="text-sm font-semibold leading-6 text-white">
             Dashboard
           </Link>
           <Link
-            href="/about"
+            target="_blank"
+            href="https://rsautomation.in/"
             className="text-sm font-semibold leading-6 text-white"
           >
             AboutUs
           </Link>
-         
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-3">
           <span className="text-base font-bold text-white">
-            {
-              isLoggedIn && currentUser? ` Welcome ${currentUser}`:''
-            }
+            {isLoggedIn && currentUser ? ` Welcome ${currentUser}` : ""}
           </span>
           <UserStatus />
         </div>
@@ -193,27 +185,24 @@ useEffect(()=>{
       >
         <div className="fixed inset-0 z-10" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-         
+          <div className="flex items-center justify-between py-1">
             <Image
               priority
-              src={datalogger}
-              width={40}
-              height={40}
+              src={RSLogoMobile}
+              width={100}
+              height={100}
               alt="DataloggerIcon"
             />
-           <span className="text-base font-bold">
-            {
-              isLoggedIn && currentUser? ` Welcome ${currentUser}`:''
-            }
-          </span>
+            <span className="text-base font-bold -ml-2">
+              {isLoggedIn && currentUser ? ` Welcome ${currentUser}` : ""}
+            </span>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              <XMarkIcon className="h-6 w-6 " aria-hidden="true" />
             </button>
           </div>
           <div className="mt-6 flow-root">
@@ -227,7 +216,7 @@ useEffect(()=>{
                         <ChevronDownIcon
                           className={classNames(
                             open ? "rotate-180" : "",
-                            "h-5 w-5 flex-none text-white"
+                            "h-5 w-5 flex-none text-black"
                           )}
                           aria-hidden="true"
                         />
@@ -256,7 +245,8 @@ useEffect(()=>{
                 </Link>
                 <Link
                   onClick={() => setMobileMenuOpen(false)}
-                  href="/about"
+                  target="_blank"
+                  href="https://rsautomation.in/"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   AboutUs
