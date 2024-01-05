@@ -75,88 +75,96 @@ const ProductionDetailReport = () => {
   return (
     <div className="content-container">
       <ReportTitle title={"Production Detail Report"} />
-      <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
-        <div className="flex flex-col">
-          <label
-            htmlFor="date"
-            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
-          >
-            Select date
-          </label>
-          <input
-            type="date"
-            name="date"
-            id="date"
-            className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
-            onChange={inputEvent}
-            value={data.date}
-            min="2023-12-02" // specify your minimum date
-            max="2023-12-20" // specify your maximum date
-          />
-        </div>
-        <div className="flex flex-col">
-          <label
-            htmlFor="energymeter"
-            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
-          >
-            Select Machine
-          </label>
-          <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="energymeter"
-            id="energymeter"
-            onChange={inputEvent}
-            value={data.energymeter}
-          >
-            <option defaultValue>Select Meter</option>
-            {Array.from({ length: 5 }, (_, index) => (
-              <option key={index + 1} value={index + 1}>
-                {index + 1}
-              </option>
-            ))}
-          </select>
-        </div>
+      <form action="" onSubmit={showResult}>
+        <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
+          <div className="flex flex-col">
+            <label
+              htmlFor="date"
+              className="sm:font-semibold font-medium sm:text-base text-sm text-white"
+            >
+              Select date
+            </label>
+            <input
+              type="date"
+              name="date"
+              id="date"
+              className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
+              onChange={inputEvent}
+              value={data.date}
+              min="2023-12-02" // specify your minimum date
+              max="2023-12-20" // specify your maximum date
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label
+              htmlFor="energymeter"
+              className="sm:font-semibold font-medium sm:text-base text-sm text-white"
+            >
+              Select Machine
+            </label>
+            <select
+              className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
+              name="energymeter"
+              id="energymeter"
+              onChange={inputEvent}
+              value={data.energymeter}
+              required
 
-        <div className="flex flex-col">
-          <label
-            htmlFor="shift"
-            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
-          >
-            Select Shift
-          </label>
-          <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="shift"
-            id="shift"
-            onChange={inputEvent}
-            value={data.shift}
-          >
-            <option defaultValue>Select Shift</option>
-            <option>1</option>
-            <option>2</option>
-            {/* <option>3</option> */}
-            <option>ALL</option>
-          </select>
+            >
+              <option value="" disabled>Select Meter</option>
+              {Array.from({ length: 5 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label
+              htmlFor="shift"
+              className="sm:font-semibold font-medium sm:text-base text-sm text-white"
+            >
+              Select Shift
+            </label>
+            <select
+              className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
+              name="shift"
+              id="shift"
+              onChange={inputEvent}
+              value={data.shift}
+              required
+
+            >
+              <option value="" disabled >Select Shift</option>
+              <option>1</option>
+              <option>2</option>
+              {/* <option>3</option> */}
+              <option>ALL</option>
+            </select>
+          </div>
+          <div>
+            <button
+              className="w-full p-2 lg:mt-6 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
+              type="submit"
+            >
+              View
+            </button>
+          </div>
+          <div>
+            {activeTab === "table" && answer.length > 0 && (
+              <SaveAsCSVButton data={answer} />
+            )}
+          </div>
+          <div>
+            {activeTab === "table" && answer.length > 0 && (
+              <SaveAsPDFButton data={answer} />
+            )}
+          </div>
         </div>
-        <div>
-          <button
-            className="w-full p-2 lg:mt-6 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
-            onClick={showResult}
-          >
-            View
-          </button>
-        </div>
-        <div>
-          {activeTab === "table" && answer.length > 0 && (
-            <SaveAsCSVButton data={answer} />
-          )}
-        </div>
-        <div>
-          {activeTab === "table" && answer.length > 0 && (
-            <SaveAsPDFButton data={answer} />
-          )}
-        </div>
-      </div>
+      </form>
+
       <div>
         <Tab.Group
           onChange={(index) =>
@@ -233,7 +241,10 @@ const ProductionDetailReport = () => {
                       <>
                         {errorMessage ? (
                           <tr>
-                            <td colSpan="9" className="py-2 text-center font-bold text-lg text-white">
+                            <td
+                              colSpan="9"
+                              className="py-2 text-center font-bold text-lg text-white"
+                            >
                               {errorMessage}
                             </td>
                           </tr>
@@ -284,7 +295,9 @@ const ProductionDetailReport = () => {
                     width={100}
                     height={100}
                   />
-                  <p className="text-center font-semibold text-white">{errorMessage}</p>
+                  <p className="text-center font-semibold text-white">
+                    {errorMessage}
+                  </p>
                 </div>
               ) : (
                 <ProductionLineChart data={answer} />

@@ -62,6 +62,24 @@ const ProductionBarchart = ({ data }) => {
         },
       },
     },
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: "white", // Set the desired color for the dataset label text
+        },
+      },
+    },
+  };
+  const pieChartOptions = {
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: "white", // Set the desired color for the dataset label text
+        },
+      },
+    },
   };
 
 
@@ -76,7 +94,7 @@ const ProductionBarchart = ({ data }) => {
           <div className="flex flex-col items-center">
             <div className="sm:w-3/4 w-1/4">
               <h2 className="text-center font-semibold text-white">Machine Efficiency</h2>
-              <Pie data={effChartData} className="sm:w-1/2 w-1/4" />
+              <Pie data={effChartData} options={pieChartOptions} className="sm:w-1/2 w-1/4" />
             </div>
           </div>
         </div>

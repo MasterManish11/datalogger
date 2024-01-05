@@ -14,7 +14,7 @@ const DashboardData = () => {
   const fetchData = async () => {
     try {
       // Fetch data from your API
-      const response = await fetch(url, { cache: 'no-store' });
+      const response = await fetch(url, { cache: "no-store" });
       const data = await response.json();
       setMachineData(data);
       setLoading(false);
@@ -24,8 +24,8 @@ const DashboardData = () => {
   };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   useEffect(() => {
     let interval = setInterval(async () => {
@@ -36,19 +36,23 @@ const DashboardData = () => {
     };
   }, []);
   return (
-    <div className="min-h-screen rounded overflow-hidden p-2 grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3  gap-4 py-2">
-      {loading ? (
-        <>
-          <Loader />
-        </>
-      ) : (
-        <>
-          {machineData?.slice(0, 5).map((data, i) => (
-            <MachineData data={data} key={i} />
-          ))}
-        </>
-      )}
-    </div>
+    <div className="min-h-screen rounded overflow-hidden px-2 grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4 py-2">
+          {loading ? (
+            <>
+              <Loader />
+            </>
+          ) : (
+            <>
+              {machineData?.slice(0, 5).map((data, i) => (
+                <div key={i} className="flex justify-center items-center">
+                  <div className="w-full max-w-md">
+                    <MachineData data={data} key={i} />
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
   );
 };
 

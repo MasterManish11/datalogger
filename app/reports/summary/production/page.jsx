@@ -99,58 +99,62 @@ const ProductionSummaryReport = () => {
   return (
     <div className="content-container">
       <ReportTitle title={"Production Summary Report"} />
-      <div className="grid lg:grid-cols-7 lg:gap-4 py-2 sm:grid-cols-4 sm:gap-4 grid-cols-2 gap-4">
-        <div className="flex flex-col">
-          <label htmlFor="fdate" className="font-semibold text-white">
-            From date
-          </label>
+      <form action="" onSubmit={showResult}>
+        <div className="grid lg:grid-cols-7 lg:gap-4 py-2 sm:grid-cols-4 sm:gap-4 grid-cols-2 gap-4">
+          <div className="flex flex-col">
+            <label htmlFor="fdate" className="font-semibold text-white">
+              From date
+            </label>
 
-          <input
-            type="date"
-            name="fdate"
-            id="fdate"
-            className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
-            onChange={inputEvent}
-            value={data.fdate}
-            min="2023-12-02" // specify your minimum date
-            max="2023-12-20" // specify your maximum date
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="tdate" className="font-semibold text-white">
-            To date
-          </label>
+            <input
+              type="date"
+              name="fdate"
+              id="fdate"
+              className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
+              onChange={inputEvent}
+              value={data.fdate}
+              min="2023-12-02" // specify your minimum date
+              max="2023-12-20" // specify your maximum date
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="tdate" className="font-semibold text-white">
+              To date
+            </label>
 
-          <input
-            type="date"
-            name="tdate"
-            id="tdate"
-            className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
-            onChange={inputEvent}
-            value={data.tdate}
-            min="2023-12-02" // specify your minimum date
-            max="2023-12-20" // specify your maximum date
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="selectEM" className="font-semibold text-white">
-            Select Machine
-          </label>
-          <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="machine"
-            id="machine"
-            onChange={inputEvent}
-            value={data.machine}
-          >
-            <option defaultValue>Select Meter</option>
-            {Array.from({ length: 5 }, (_, index) => (
-              <option key={index + 1} value={index + 1}>
-                {index + 1}
-              </option>
-            ))}
-          </select>
-          {/* <Multiselect
+            <input
+              type="date"
+              name="tdate"
+              id="tdate"
+              className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
+              onChange={inputEvent}
+              value={data.tdate}
+              min="2023-12-02" // specify your minimum date
+              max="2023-12-20" // specify your maximum date
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="selectEM" className="font-semibold text-white">
+              Select Machine
+            </label>
+            <select
+              className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
+              name="machine"
+              id="machine"
+              onChange={inputEvent}
+              value={data.machine}
+              required
+            >
+              <option value="" disabled>Select Meter</option>
+              {Array.from({ length: 5 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
+            {/* <Multiselect
             className="w-full rounded lg:text-base text-sm"
             options={state.options} // Options to display in the dropdown
             selectedValues={state.selectedValue} // Preselected value to persist in dropdown
@@ -159,48 +163,51 @@ const ProductionSummaryReport = () => {
             displayValue="name" // Property name to display in the dropdown options
             id="selectEM"
           /> */}
-        </div>
+          </div>
 
-        <div>
-          <label
-            htmlFor="shift"
-            className="font-semibold flex flex-col text-white"
-          >
-            Select Shift
-          </label>
+          <div>
+            <label
+              htmlFor="shift"
+              className="font-semibold flex flex-col text-white"
+            >
+              Select Shift
+            </label>
 
-          <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="shift"
-            id="shift"
-            onChange={inputEvent}
-            value={data.shift}
-          >
-            <option defaultValue>Select Shift</option>
-            <option>1</option>
-            <option>2</option>
-            <option>ALL</option>
-          </select>
+            <select
+              className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
+              name="shift"
+              id="shift"
+              onChange={inputEvent}
+              value={data.shift}
+              required
+            >
+              <option value="" disabled>Select Shift</option>
+              <option>1</option>
+              <option>2</option>
+              <option>ALL</option>
+            </select>
+          </div>
+          <div>
+            <button
+              className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
+              type="submit"
+            >
+              View
+            </button>
+          </div>
+          <div>
+            {activeTab === "table" && answer.length > 0 && (
+              <SaveAsCSVButton data={answer} />
+            )}
+          </div>
+          <div>
+            {activeTab === "table" && answer.length > 0 && (
+              <SaveAsPDFButton data={answer} />
+            )}
+          </div>
         </div>
-        <div>
-          <button
-            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
-            onClick={showResult}
-          >
-            View
-          </button>
-        </div>
-        <div>
-          {activeTab === "table" && answer.length > 0 && (
-            <SaveAsCSVButton data={answer} />
-          )}
-        </div>
-        <div>
-          {activeTab === "table" && answer.length > 0 && (
-            <SaveAsPDFButton data={answer} />
-          )}
-        </div>
-      </div>
+      </form>
+
       <div>
         <Tab.Group
           onChange={(index) =>

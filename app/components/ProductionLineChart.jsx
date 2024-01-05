@@ -32,7 +32,7 @@ const ProductionLineChart = ({ data }) => {
         labels,
         datasets: [
           {
-            label: "Date vs Production",
+            label: "Time vs Production",
             data: productionData,
             backgroundColor: "rgba(75,192,192,0.2)",
             borderColor: "rgba(75,192,192,1)",
@@ -72,6 +72,12 @@ const ProductionLineChart = ({ data }) => {
       },
     },
     plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: "white", // Set the desired color for the dataset label text
+        },
+      },
       tooltip: {
         callbacks: {
           label: (context) => {

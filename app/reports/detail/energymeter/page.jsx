@@ -12,7 +12,7 @@ import SaveAsPDFButton from "@/app/components/SaveAsPDFButton";
 
 const EnergyDetailReport = () => {
   const [answer, setAnswer] = useState([]);
-  const [activeTab, setActiveTab] = useState("table")
+  const [activeTab, setActiveTab] = useState("table");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [data, setData] = useState({
@@ -75,85 +75,103 @@ const EnergyDetailReport = () => {
   return (
     <div className="content-container">
       <ReportTitle title={"EnergyMeter Detail Report"} />
-      <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
-        <div className="flex flex-col">
-          <label
-            htmlFor="date"
-            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
-          >
-            Select date
-          </label>
+      <form action=""  onSubmit={showResult}>
+        <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
+          <div className="flex flex-col">
+            <label
+              htmlFor="date"
+              className="sm:font-semibold font-medium sm:text-base text-sm text-white"
+            >
+              Select date
+            </label>
 
-          <input
-            type="date"
-            name="date"
-            id="date"
-            className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
-            onChange={inputEvent}
-            value={data.date}
-            min="2023-12-02" // specify your minimum date
-            max="2023-12-20" // specify your maximum date
-          />
-        </div>
-        <div className="flex flex-col">
-          <label
-            htmlFor="energymeter"
-            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
-          >
-            Select Meter
-          </label>
+            <input
+              type="date"
+              name="date"
+              id="date"
+              className="w-full rounded p-1 border-2 border-gray-100 lg:text-base text-sm"
+              onChange={inputEvent}
+              value={data.date}
+              min="2023-12-02" // specify your minimum date
+              max="2023-12-20" // specify your maximum date
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label
+              htmlFor="energymeter"
+              className="sm:font-semibold font-medium sm:text-base text-sm text-white"
+            >
+              Select Meter
+            </label>
 
-          <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="energymeter"
-            id="energymeter"
-            onChange={inputEvent}
-            value={data.energymeter}
-          >
-            <option defaultValue>Select Meter</option>
-            {Array.from({ length: 5 }, (_, index) => (
-              <option key={index + 1} value={index + 1}>
-                {index + 1}
-              </option>
-            ))}
-          </select>
-        </div>
+            <select
+              className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
+              name="energymeter"
+              id="energymeter"
+              onChange={inputEvent}
+              value={data.energymeter}
+              required
+            >
+              <option value="" disabled>Select Meter</option>
+              {Array.from({ length: 5 }, (_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="flex flex-col">
-          <label
-            htmlFor="shift"
-            className="sm:font-semibold font-medium sm:text-base text-sm text-white"
-          >
-            Select Shift
-          </label>
+          <div className="flex flex-col">
+            <label
+              htmlFor="shift"
+              className="sm:font-semibold font-medium sm:text-base text-sm text-white"
+            >
+              Select Shift
+            </label>
 
-          <select
-            className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
-            name="shift"
-            id="shift"
-            onChange={inputEvent}
-            value={data.shift}
-          >
-            <option defaultValue>Select Shift</option>
-            <option>1</option>
-            <option>2</option>
-            {/* <option>3</option> */}
-            <option>ALL</option>
-          </select>
+            <select
+              className="w-full rounded p-1 py-[0.4rem] border-2 border-gray-100 lg:text-base text-sm"
+              name="shift"
+              id="shift"
+              onChange={inputEvent}
+              value={data.shift}
+              required
+            >
+              <option value="" disabled>Select Shift</option>
+              <option>1</option>
+              <option>2</option>
+              {/* <option>3</option> */}
+              <option>ALL</option>
+            </select>
+          </div>
+          <div>
+            <button
+              className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
+              type="submit"
+            >
+              View
+            </button>
+          </div>
+          <div>
+            {activeTab === "table" && answer.length > 0 && (
+              <SaveAsCSVButton data={answer} />
+            )}
+          </div>
+          <div>
+            {activeTab === "table" && answer.length > 0 && (
+              <SaveAsPDFButton data={answer} />
+            )}
+          </div>
         </div>
-        <div>
-          <button
-            className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
-            onClick={showResult}
-          >
-            View
-          </button>
-        </div>
-        <div>{activeTab === "table" && answer.length > 0 && <SaveAsCSVButton data={answer} />}</div>
-        <div>{activeTab === "table" && answer.length > 0 && <SaveAsPDFButton data={answer} />}</div>
-      </div>
+      </form>
+
       <div>
-        <Tab.Group onChange={(index) => setActiveTab(index === 0 ? "table" : "graphical")}>
+        <Tab.Group
+          onChange={(index) =>
+            setActiveTab(index === 0 ? "table" : "graphical")
+          }
+        >
           <Tab.List className="space-x-2 py-2">
             <Tab as={Fragment}>
               {({ selected }) => (
@@ -290,7 +308,9 @@ const EnergyDetailReport = () => {
                     width={100}
                     height={100}
                   />
-                  <p className="text-center font-semibold text-white">{errorMessage}</p>
+                  <p className="text-center font-semibold text-white">
+                    {errorMessage}
+                  </p>
                 </div>
               ) : (
                 <KwhrLineChart data={answer} />
