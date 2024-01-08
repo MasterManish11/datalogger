@@ -33,10 +33,12 @@ const EnergyDetailReport = () => {
     });
   };
 
+ 
+
   const showResult = async (event) => {
+    event.preventDefault();
     try {
       setLoading(true);
-      event.preventDefault();
 
       // Define the API endpoint
       const apiUrl = "/api/detail/energymeter";
@@ -75,7 +77,7 @@ const EnergyDetailReport = () => {
   return (
     <div className="content-container">
       <ReportTitle title={"EnergyMeter Detail Report"} />
-      <form action=""  onSubmit={showResult}>
+      <form action="" onSubmit={showResult}>
         <div className="grid lg:grid-cols-6 lg:gap-4 py-2 grid-cols-3 gap-4">
           <div className="flex flex-col">
             <label
@@ -113,7 +115,9 @@ const EnergyDetailReport = () => {
               value={data.energymeter}
               required
             >
-              <option value="" disabled>Select Meter</option>
+              <option value="" disabled>
+                Select Meter
+              </option>
               {Array.from({ length: 5 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
@@ -138,7 +142,9 @@ const EnergyDetailReport = () => {
               value={data.shift}
               required
             >
-              <option value="" disabled>Select Shift</option>
+              <option value="" disabled>
+                Select Shift
+              </option>
               <option>1</option>
               <option>2</option>
               {/* <option>3</option> */}
@@ -148,19 +154,20 @@ const EnergyDetailReport = () => {
           <div>
             <button
               className="w-full lg:mt-6 p-2 bg-[#1E7E9E]  hover:bg-[#39ADBD] rounded font-semibold text-white"
-              type="submit"
+              type="button"  // Change to type="button" to prevent form submission
+               onClick={showResult}
             >
               View
             </button>
           </div>
           <div>
             {activeTab === "table" && answer.length > 0 && (
-              <SaveAsCSVButton data={answer} />
+                <SaveAsCSVButton data={answer} />
             )}
           </div>
           <div>
             {activeTab === "table" && answer.length > 0 && (
-              <SaveAsPDFButton data={answer} />
+                <SaveAsPDFButton data={answer} />
             )}
           </div>
         </div>

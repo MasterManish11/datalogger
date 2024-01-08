@@ -3,7 +3,9 @@ import jsPDF from 'jspdf';
 import "jspdf-autotable";
 
 const SaveAsPDFButton = () => {
-  const saveData = () => {
+  
+  const saveData = (e) => {
+    e.preventDefault();
     const pdf = new jsPDF();
     pdf.autoTable({ html: "#table" }); // You may need to adjust this based on your actual table structure
     pdf.save('data.pdf');

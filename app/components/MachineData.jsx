@@ -23,25 +23,25 @@ const MachineData = ({ data }) => {
         <h5 className="realtimelabelwarpper">
           Production (Piece)
         </h5>
-        <h5 className="realtimedatawarpper text-purple-400">
+        <h5 className="realtimedatawarpper text-yellow-400">
           {data.Production}
         </h5>
         <h5 className="realtimelabelwarpper">
           Runtime
         </h5>
-        <h5 className="realtimedatawarpper text-green-400">
+        <h5 className="realtimedatawarpper text-yellow-400">
           {data.Runtime}
         </h5>
         <h5 className="realtimelabelwarpper">
           Efficiency (%)
         </h5>
-        <h5 className="realtimedatawarpper text-sky-400">
+        <h5 className="realtimedatawarpper text-yellow-400">
           {data.Efficiency}
         </h5>
         <h5 className="realtimelabelwarpper">
           Energy (Kwhr)
         </h5>
-        <h5 className="realtimedatawarpper text-pink-400">
+        <h5 className="realtimedatawarpper text-yellow-400">
           {data.Kwhr}
         </h5>
         <h5 className="realtimelabelwarpper">
