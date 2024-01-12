@@ -112,7 +112,7 @@ const ProductionDetailReport = () => {
               required
 
             >
-              <option value="" disabled>Select Meter</option>
+              <option value="" disabled>Select Machine</option>
               {Array.from({ length: 5 }, (_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
